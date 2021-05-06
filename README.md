@@ -8,10 +8,10 @@
 
 ## Summary
 
-This project is the Staking UI for Snowball and  a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project is the Staking App for Snowball and  a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ### Local http://localhost:3000
-### Development https://staking-ui.vercel.app/
+### Development https://staking-ui.vercel.app
 
 ---
 

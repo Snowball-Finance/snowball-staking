@@ -1,0 +1,60 @@
+
+import { memo } from 'react'
+import Link from 'next/link'
+import { makeStyles } from '@material-ui/core/styles'
+
+import LINKS from 'utils/constants/links'
+import { LOGO_IMAGE_PATH } from 'utils/constants/image-paths'
+import clsx from 'clsx'
+import Typography from '@material-ui/core/Typography'
+
+const useStyles = makeStyles((theme) => ({
+  picture: {
+    display: 'flex',
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'unset'
+  },
+  img: {
+    height: 40,
+    objectFit: 'contain',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 1,
+    marginLeft: theme.spacing(1)
+  }
+}));
+
+const Logo = ({
+  className,
+  ...rest
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Link href={LINKS.HOME.HREF}>
+      <a className={clsx(classes.container, className)}>
+        <picture className={classes.picture} {...rest}>
+          <source srcSet={LOGO_IMAGE_PATH} />
+          <img
+            className={classes.img}
+            src={LOGO_IMAGE_PATH}
+            alt='logo'
+          />
+        </picture>
+        <Typography
+          color='textPrimary'
+          className={classes.title}
+        >
+          Snowball Staking
+        </Typography>
+      </a>
+    </Link>
+  )
+}
+
+export default memo(Logo);
