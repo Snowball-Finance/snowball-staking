@@ -6,6 +6,9 @@ import HomeHeader from './HomeHeader'
 import SnowBalance from './SnowBalance'
 import Unlocked from './Unlocked'
 import TotalLocked from './TotalLocked'
+import SnowClaim from './SnowClaim'
+import BoostCalculator from './BoostCalculator'
+import LockForm from './LockForm'
 
 const Home = () => {
   return (
@@ -21,6 +24,15 @@ const Home = () => {
       </Grid>
       <Grid item xs={12} md={4}>
         <TotalLocked />
+      </Grid>
+      <Grid item xs={12}>
+        <LockForm />
+      </Grid>
+      <Grid item xs={12}>
+        <SnowClaim />
+      </Grid>
+      <Grid item xs={12}>
+        <BoostCalculator />
       </Grid>
     </Grid>
   )

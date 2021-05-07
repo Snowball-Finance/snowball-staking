@@ -44,6 +44,9 @@ const theme = responsiveFontSizes(createMuiTheme({
     secondary: {
       main: '#337ab7',
     },
+    danger: {
+      main: '#eb196e',
+    },
     background: {
       default: '#1c2132',
       primary: '#1e2644',
