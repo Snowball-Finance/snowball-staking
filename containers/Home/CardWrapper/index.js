@@ -7,9 +7,9 @@ const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(1, 1.5),
+    padding: theme.spacing(2),
     border: `1px solid ${theme.palette.text.primary}`,
-    backgroundColor: theme.palette.background.primary
+    backgroundColor: theme.palette.background.default
   },
   title: {
     fontWeight: 'bold',
@@ -26,7 +26,7 @@ const CardWrapper = ({
   return (
     <Card className={classes.card}>
       <Typography
-        variant='subtitle1'
+        variant='h6'
         color='textPrimary'
         className={classes.title}
       >

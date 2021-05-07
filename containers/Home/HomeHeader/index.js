@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: theme.spacing(2),
   }
@@ -24,10 +24,10 @@ const HomeHeader = () => {
         variant='h1'
         className={classes.title}
       >
-        DILL
+        xSNOB
       </Typography>
       <Typography
-        variant='body2'
+        variant='body1'
         color='textSecondary'
       >
         Stake your Snowballs to receive a portion of the profits from Gauges.

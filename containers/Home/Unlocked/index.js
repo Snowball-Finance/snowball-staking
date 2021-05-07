@@ -33,7 +33,7 @@ const Unlocked = () => {
           variant='h6'
           color='textSecondary'
         >
-          = 0 DILL
+          = 0 xSNOB
         </Typography>
       </div>
     </CardWrapper>
