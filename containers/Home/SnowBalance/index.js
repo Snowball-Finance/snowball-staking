@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
+import { useContracts } from 'contexts/contract-context'
 import CoinIcon from 'components/Icons/CoinIcon'
 import CardWrapper from '../CardWrapper'
 import theme from 'styles/theme'
@@ -18,6 +19,7 @@ const useStyles = makeStyles(() => ({
 
 const SnowBalance = () => {
   const classes = useStyles();
+  const { snowballBalance } = useContracts();
 
   return (
     <CardWrapper title='Snowball Balance'>
@@ -26,7 +28,7 @@ const SnowBalance = () => {
           variant='h6'
           color='textSecondary'
         >
-          0
+          {parseFloat(snowballBalance).toFixed(3)}
         </Typography>
         <CoinIcon className={classes.coin} />
       </div>

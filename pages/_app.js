@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 
 import Layout from 'Layout'
 import SnowWeb3Provider from 'utils/hocs/SnowWeb3Provider'
+import { PopupProvider } from 'contexts/popup-context'
 import * as COMMON_CONSTANTS from 'utils/constants/common'
 import { BANNER_IMAGE_PATH } from 'utils/constants/image-paths'
 import theme from 'styles/theme'
@@ -43,10 +44,12 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <SnowWeb3Provider>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <PopupProvider>
+            <CssBaseline />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PopupProvider>
         </ThemeProvider>
       </SnowWeb3Provider>
     </>

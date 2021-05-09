@@ -2,6 +2,7 @@
 import { memo } from 'react'
 import { Grid } from '@material-ui/core'
 
+import { useContracts } from 'contexts/contract-context'
 import HomeHeader from './HomeHeader'
 import SnowBalance from './SnowBalance'
 import Unlocked from './Unlocked'
@@ -11,6 +12,8 @@ import BoostCalculator from './BoostCalculator'
 import LockForm from './LockForm'
 
 const Home = () => {
+  const { } = useContracts();
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
