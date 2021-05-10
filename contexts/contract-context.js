@@ -1,7 +1,8 @@
-import { createContext, useState, useEffect, useContext } from 'react'
+import { createContext, useState, useEffect, useContext, useMemo } from 'react'
 import { ethers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
 import CoinGecko from 'coingecko-api'
+import { parseEther } from 'ethers/lib/utils'
 
 import {
   CONTRACTS,
@@ -11,6 +12,7 @@ import SNOWBALL_ABI from 'libs/abis/snowball.json'
 import SNOWCONE_ABI from 'libs/abis/snowcone.json'
 import { usePopup } from 'contexts/popup-context'
 import { isEmpty } from 'utils/helpers/utility'
+import { getEpochSecondForDay } from 'utils/helpers/date';
 
 const ContractContext = createContext(null)
 
@@ -24,11 +26,12 @@ export function ContractProvider({ children }) {
   const [lockedAmount, setLockedAmount] = useState();
   const [lockEndDate, setLockEndDate] = useState();
   const [snowconeBalance, setSnowconeBalance] = useState();
-  const [totalSupply, setTotalSupply] = useState(null);
-  const [totalLocked, setTotalLocked] = useState(null);
-  const [lockedValue, setLockedValue] = useState(null);
-  const [totalSnowballValue, setTotalSnowballValue] = useState(null);
+  const [totalSupply, setTotalSupply] = useState(0);
+  const [totalLocked, setTotalLocked] = useState(0);
   const [prices, setPrices] = useState({});
+
+  const lockedValue = useMemo(() => prices.snowball * parseFloat(ethers.utils.formatEther(totalSupply)), [prices, totalSupply])
+  const totalSnowballValue = useMemo(() => prices.snowball * parseFloat(ethers.utils.formatEther(totalLocked)), [prices, totalLocked])
 
   useEffect(() => {
     const getPrices = async () => {
@@ -105,18 +108,11 @@ export function ContractProvider({ children }) {
           snowconeContract['supply()']({ gasLimit: 1000000 }),
         ]);
 
-        const totalLockedValue =
-          prices.snowball * parseFloat(ethers.utils.formatEther(totalSupply));
-        const totalSnowballValue =
-          prices.snowball * parseFloat(ethers.utils.formatEther(totalLocked));
-
         setLockedAmount(lockStats?.amount);
         setLockEndDate(lockStats?.end);
         setSnowconeBalance(snowconeBalance);
         setTotalSupply(totalSupply);
         setTotalLocked(totalLocked);
-        setLockedValue(totalLockedValue);
-        setTotalSnowballValue(totalSnowballValue);
       } catch (error) {
         console.log('[Error] getSnowconeInfo => ', error)
       }
@@ -127,6 +123,14 @@ export function ContractProvider({ children }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snowconeContract])
+
+  const createLock = (data) => {
+    snowconeContract.create_lock(
+      parseEther((data.balance).toString()),
+      getEpochSecondForDay(new Date(data.date)),
+      { gasLimit: 600000 },
+    );
+  }
 
   return (
     <ContractContext.Provider
@@ -139,7 +143,8 @@ export function ContractProvider({ children }) {
         totalSupply,
         totalLocked,
         lockedValue,
-        totalSnowballValue
+        totalSnowballValue,
+        createLock
       }}
     >
       {children}
@@ -162,7 +167,8 @@ export function useContracts() {
     totalSupply,
     totalLocked,
     lockedValue,
-    totalSnowballValue
+    totalSnowballValue,
+    createLock
   } = context
 
   return {
@@ -174,6 +180,7 @@ export function useContracts() {
     totalSupply,
     totalLocked,
     lockedValue,
-    totalSnowballValue
+    totalSnowballValue,
+    createLock
   }
 }
