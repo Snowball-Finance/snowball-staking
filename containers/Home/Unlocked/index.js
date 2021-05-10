@@ -1,10 +1,13 @@
 import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import { formatEther } from 'ethers/lib/utils';
 
+import { useContracts } from 'contexts/contract-context'
 import CoinIcon from 'components/Icons/CoinIcon'
 import CardWrapper from '../CardWrapper'
 import theme from 'styles/theme'
+import { formatDate } from 'utils/helpers/date';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -18,22 +21,57 @@ const useStyles = makeStyles(() => ({
 
 const Unlocked = () => {
   const classes = useStyles();
+  const {
+    snowballBalance,
+    snowconeBalance,
+    lockEndDate,
+    lockedAmount
+  } = useContracts();
+
+  const unlockTime = new Date();
+  unlockTime.setTime(+(lockEndDate?.toString() || 0) * 1000);
+  const isLocked = Boolean(+(lockEndDate?.toString() || 0));
+  const isExpired = unlockTime < new Date();
 
   return (
-    <CardWrapper title='Unlocked'>
+    <CardWrapper
+      title={isLocked ? (
+        isExpired ? (
+          <>Expired (since {formatDate(unlockTime)})</>
+        ) : (
+          <>Locked (until {formatDate(unlockTime)})</>
+        )
+      ) : (
+        'Unlocked'
+      )}
+    >
       <div className={classes.content}>
         <Typography
           variant='h6'
           color='textSecondary'
         >
-          0
+          {lockedAmount !== null
+            ? Number(formatEther(lockedAmount?.toString() || '0'))
+              .toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })
+            : '--'}
         </Typography>
         <CoinIcon className={classes.coin} />
         <Typography
           variant='h6'
           color='textSecondary'
         >
-          = 0 xSNOB
+          {'= '}
+          {snowballBalance !== null
+            ? Number(formatEther(snowconeBalance?.toString() || '0'))
+              .toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })
+            : '--'}
+          {' xSNOB'}
         </Typography>
       </div>
     </CardWrapper>

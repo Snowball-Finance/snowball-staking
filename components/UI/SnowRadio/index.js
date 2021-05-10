@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
+import { estimateXSnobForPeriod } from 'utils/helpers/stakeDate';
+
 const useStyles = makeStyles((theme) => ({
   group: {
     flexDirection: 'row',
@@ -17,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.dark
   },
   label: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 600,
     color: theme.palette.secondary.main
   }
 }));
+
+const DAY = 86400;
+const WEEK = 7 * 86400;
 
 const SnowRadio = React.forwardRef(({
   items,
@@ -30,6 +35,21 @@ const SnowRadio = React.forwardRef(({
   ...rest
 }, ref) => {
   const classes = useStyles()
+
+  const getXSnobByDuration = (value) => {
+    switch (value) {
+      case '1':
+        return estimateXSnobForPeriod(1, WEEK).toFixed(4)
+      case '2':
+        return estimateXSnobForPeriod(1, DAY * 30).toFixed(4)
+      case '3':
+        return estimateXSnobForPeriod(1, DAY * 365).toFixed(4)
+      case '4':
+        return estimateXSnobForPeriod(1, DAY * 365 * 4).toFixed(4)
+      default:
+        return estimateXSnobForPeriod(1, WEEK).toFixed(4)
+    }
+  };
 
   return (
     <div className={className}>
@@ -44,7 +64,14 @@ const SnowRadio = React.forwardRef(({
             key={index}
             value={item.VALUE}
             control={<Radio classes={{ root: classes.radio }} />}
-            label={item.LABEL}
+            className={classes.label}
+            label={
+              <Typography className={classes.label}>
+                {item.LABEL}
+                <br />
+                {`1 Snob = ${getXSnobByDuration(item.VALUE)} xSnob`}
+              </Typography>
+            }
           />
         ))}
       </RadioGroup>
