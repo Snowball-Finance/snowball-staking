@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { ethers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
+import CoinGecko from 'coingecko-api'
 
 import {
   CONTRACTS,
@@ -20,6 +21,30 @@ export function ContractProvider({ children }) {
   const [snowballContract, setSnowballContract] = useState();
   const [snowconeContract, setSnowconeContract] = useState();
   const [snowballBalance, setSnowballBalance] = useState(0);
+  const [lockedAmount, setLockedAmount] = useState();
+  const [lockEndDate, setLockEndDate] = useState();
+  const [snowconeBalance, setSnowconeBalance] = useState();
+  const [totalSupply, setTotalSupply] = useState(null);
+  const [totalLocked, setTotalLocked] = useState(null);
+  const [lockedValue, setLockedValue] = useState(null);
+  const [totalSnowballValue, setTotalSnowballValue] = useState(null);
+  const [prices, setPrices] = useState({});
+
+  useEffect(() => {
+    const getPrices = async () => {
+      const CoinGeckoClient = new CoinGecko();
+      const { data: response } = await CoinGeckoClient.simple.price({
+        ids: ['snowball-token'],
+        vs_currencies: ['usd'],
+      });
+
+      const prices = { snowball: response['snowball-token']?.usd || 0 };
+      setPrices(prices);
+    };
+
+    getPrices();
+    setInterval(() => getPrices(), 120000);
+  }, []);
 
   useEffect(() => {
     const getContacts = async () => {
@@ -68,18 +93,30 @@ export function ContractProvider({ children }) {
   useEffect(() => {
     const getSnowconeInfo = async () => {
       try {
-        // * commented by great dolphin
-        // const [
-        //   lockStats,
-        //   balance,
-        //   totalSupply,
-        //   totalLocked,
-        // ] = await Promise.all([
-        //   snowconeContract.locked(account),
-        //   snowconeContract.balanceOf(account, { gasLimit: 1000000 }),
-        //   snowconeContract.totalSupply({ gasLimit: 1000000 }),
-        //   snowconeContract.supply({ gasLimit: 1000000 }),
-        // ]);
+        const [
+          lockStats,
+          snowconeBalance,
+          totalSupply,
+          totalLocked,
+        ] = await Promise.all([
+          snowconeContract.locked(account, { gasLimit: 1000000 }),
+          snowconeContract['balanceOf(address)'](account, { gasLimit: 1000000 }),
+          snowconeContract['totalSupply()']({ gasLimit: 1000000 }),
+          snowconeContract['supply()']({ gasLimit: 1000000 }),
+        ]);
+
+        const totalLockedValue =
+          prices.snowball * parseFloat(ethers.utils.formatEther(totalSupply));
+        const totalSnowballValue =
+          prices.snowball * parseFloat(ethers.utils.formatEther(totalLocked));
+
+        setLockedAmount(lockStats?.amount);
+        setLockEndDate(lockStats?.end);
+        setSnowconeBalance(snowconeBalance);
+        setTotalSupply(totalSupply);
+        setTotalLocked(totalLocked);
+        setLockedValue(totalLockedValue);
+        setTotalSnowballValue(totalSnowballValue);
       } catch (error) {
         console.log('[Error] getSnowconeInfo => ', error)
       }
@@ -94,7 +131,15 @@ export function ContractProvider({ children }) {
   return (
     <ContractContext.Provider
       value={{
-        snowballBalance
+        prices,
+        snowballBalance,
+        snowconeBalance,
+        lockedAmount,
+        lockEndDate,
+        totalSupply,
+        totalLocked,
+        lockedValue,
+        totalSnowballValue
       }}
     >
       {children}
@@ -109,10 +154,26 @@ export function useContracts() {
   }
 
   const {
-    snowballBalance
+    prices,
+    snowballBalance,
+    snowconeBalance,
+    lockedAmount,
+    lockEndDate,
+    totalSupply,
+    totalLocked,
+    lockedValue,
+    totalSnowballValue
   } = context
 
   return {
-    snowballBalance
+    prices,
+    snowballBalance,
+    snowconeBalance,
+    lockedAmount,
+    lockEndDate,
+    totalSupply,
+    totalLocked,
+    lockedValue,
+    totalSnowballValue
   }
 }

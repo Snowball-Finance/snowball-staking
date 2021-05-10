@@ -1,7 +1,9 @@
 import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import { formatEther } from 'ethers/lib/utils';
 
+import { useContracts } from 'contexts/contract-context'
 import CoinIcon from 'components/Icons/CoinIcon'
 import CardWrapper from '../CardWrapper'
 import theme from 'styles/theme'
@@ -18,6 +20,11 @@ const useStyles = makeStyles(() => ({
 
 const TotalLocked = () => {
   const classes = useStyles();
+  const {
+    snowballBalance,
+    totalLocked,
+    totalSnowballValue,
+  } = useContracts();
 
   return (
     <CardWrapper title='Total Locked'>
@@ -26,14 +33,29 @@ const TotalLocked = () => {
           variant='h6'
           color='textSecondary'
         >
-          285, 283
+          {snowballBalance !== null
+            ? Number(
+              formatEther(totalLocked?.toString() || '0'),
+            ).toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })
+            : '--'}
         </Typography>
         <CoinIcon className={classes.coin} />
         <Typography
           variant='h6'
           color='textSecondary'
         >
-          = $555, 390
+          = $
+          {snowballBalance !== null
+            ? Number(
+              totalSnowballValue?.toString() || '0',
+            ).toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })
+            : '--'}
         </Typography>
       </div>
     </CardWrapper>
