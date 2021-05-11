@@ -24,14 +24,11 @@ const Unlocked = () => {
   const {
     snowballBalance,
     snowconeBalance,
-    lockEndDate,
-    lockedAmount
+    lockedAmount,
+    unlockTime,
+    isLocked,
+    isExpired,
   } = useContracts();
-
-  const unlockTime = new Date();
-  unlockTime.setTime(+(lockEndDate?.toString() || 0) * 1000);
-  const isLocked = Boolean(+(lockEndDate?.toString() || 0));
-  const isExpired = unlockTime < new Date();
 
   return (
     <CardWrapper

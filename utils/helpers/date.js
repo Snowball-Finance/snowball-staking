@@ -23,7 +23,8 @@ export const getTimeEpoch = () => {
 };
 
 export const formatDate = (date) => {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const value = new Date(date)
+  return `${value.getFullYear()}-${value.getMonth() + 1}-${value.getDate()}`;
 };
 
 export const dateFromEpoch = (epoch) => {
