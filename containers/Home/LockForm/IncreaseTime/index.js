@@ -1,23 +1,22 @@
 
 import { memo, useEffect, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import { useContracts } from 'contexts/contract-context'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import SnowTextField from 'components/UI/SnowTextField'
 import SnowDatePicker from 'components/UI/SnowDatePicker'
 import SnowRadio from 'components/UI/SnowRadio'
-import { BALANCE_VALID, DATE_VALID, SELECT_VALID } from 'utils/constants/validations'
+import { DATE_VALID, SELECT_VALID } from 'utils/constants/validations'
 import DURATIONS from 'utils/constants/durations'
 import {
   getDayOffset,
   getWeekDiff,
+  dateFromEpoch,
 } from 'utils/helpers/date';
-import { estimateXSnobForDate } from 'utils/helpers/stakeDate';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -27,17 +26,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const dateAfter = getDayOffset(new Date(), 7);
 const dateBefore = getDayOffset(new Date(), 365 * 2);
 
-const CreateLock = () => {
+const IncreaseTime = () => {
   const classes = useStyles();
-  const { snowballBalance, createLock } = useContracts();
+  const { lockEndDate, increaseTime } = useContracts();
+  const lockEndDateValue = dateFromEpoch(+(lockEndDate?.toString() || 0));
+  const dateAfter = getDayOffset(lockEndDateValue, 7);
 
   const schema = yup.object().shape({
-    balance: BALANCE_VALID.max(snowballBalance, `This field should be less than ${snowballBalance}.`),
     date: DATE_VALID.test('date',
-      'Date should be in 2 years',
+      'Date should be in 4 years',
       value => new Date(value) <= dateBefore),
     duration: SELECT_VALID
   });
@@ -50,8 +49,7 @@ const CreateLock = () => {
 
   const onSubmit = async (data) => {
     try {
-      await createLock(data)
-      setValue('balance', 0)
+      await increaseTime(data)
       setValue('date', dateAfter)
       setValue('duration', DURATIONS[0].VALUE)
     } catch (error) {
@@ -62,36 +60,36 @@ const CreateLock = () => {
   useEffect(() => {
     switch (watchAllFields.duration) {
       case '1':
-        setValue('date', getDayOffset(new Date(), 7))
+        setValue('date', getDayOffset(lockEndDateValue, 7))
         break;
       case '2':
-        setValue('date', getDayOffset(new Date(), 30))
+        setValue('date', getDayOffset(lockEndDateValue, 30))
         break;
       case '3':
-        setValue('date', getDayOffset(new Date(), 364))
+        setValue('date', getDayOffset(lockEndDateValue, 364))
         break;
       case '4':
-        setValue('date', getDayOffset(new Date(), 365 * 2))
+        setValue('date', getDayOffset(lockEndDateValue, 365 * 2))
         break;
       default:
-        setValue('date', getDayOffset(new Date(), 7))
+        setValue('date', getDayOffset(lockEndDateValue, 7))
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchAllFields.duration]);
 
   const displayLockTime = useMemo(() => {
-    const lockingWeeks = getWeekDiff(new Date(), (watchAllFields?.date || dateAfter));
+    const lockingWeeks = getWeekDiff(lockEndDateValue, (watchAllFields?.date || dateAfter));
 
     if (lockingWeeks < 52) {
       return `${lockingWeeks} week${lockingWeeks > 1 ? 's' : ''}`;
     } else {
       const years = Number(
-        (+watchAllFields?.date - +new Date()) / 365 / 1000 / 3600 / 24,
+        (+watchAllFields?.date - +lockEndDateValue) / 365 / 1000 / 3600 / 24,
       ).toFixed(0);
       return `${years} ${years === '1' ? 'year' : 'years'} (${lockingWeeks} weeks)`;
     }
-  }, [watchAllFields?.date])
+  }, [watchAllFields?.date, lockEndDateValue, dateAfter])
 
   return (
     <form
@@ -100,20 +98,7 @@ const CreateLock = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Controller
-            as={<SnowTextField />}
-            type='number'
-            name='balance'
-            label={`Balance: ${parseFloat(snowballBalance).toFixed(3)}`}
-            placeholder='Balance'
-            onMax={() => setValue('balance', snowballBalance)}
-            error={errors.balance?.message}
-            control={control}
-            defaultValue={0.00}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Controller
             as={<SnowDatePicker />}
             name='date'
@@ -126,14 +111,6 @@ const CreateLock = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography
-            variant='body1'
-            color='textSecondary'
-          >
-            Note: your selected date will be rounded to the nearest weekly xSNOB epoch
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
           <Controller
             as={<SnowRadio />}
             name='duration'
@@ -143,23 +120,11 @@ const CreateLock = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography
-            variant='body2'
-            color='textSecondary'
-          >
-            {'You will receive '}
-            <b>
-              {watchAllFields.balance ? estimateXSnobForDate(+watchAllFields.balance, watchAllFields.date).toFixed(4) : 0}
-            </b>
-            {' xSnob'}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
           <ContainedButton
             fullWidth
             type='submit'
           >
-            Approve and Create Lock
+            Extend Lock Time
           </ContainedButton>
         </Grid>
       </Grid>
@@ -167,4 +132,4 @@ const CreateLock = () => {
   )
 }
 
-export default memo(CreateLock)
+export default memo(IncreaseTime)

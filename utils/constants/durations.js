@@ -13,7 +13,7 @@ const DURATIONS = [
     VALUE: '3',
   },
   {
-    LABEL: '4 Years',
+    LABEL: '2 Years',
     VALUE: '4',
   },
 ]

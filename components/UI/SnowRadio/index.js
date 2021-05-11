@@ -45,7 +45,7 @@ const SnowRadio = React.forwardRef(({
       case '3':
         return estimateXSnobForPeriod(1, DAY * 365).toFixed(4)
       case '4':
-        return estimateXSnobForPeriod(1, DAY * 365 * 4).toFixed(4)
+        return estimateXSnobForPeriod(1, DAY * 365 * 2).toFixed(4)
       default:
         return estimateXSnobForPeriod(1, WEEK).toFixed(4)
     }

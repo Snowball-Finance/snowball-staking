@@ -1,9 +1,13 @@
 
 import { memo } from 'react'
+import { Grid } from '@material-ui/core'
 
 import { useContracts } from 'contexts/contract-context'
 import CardWrapper from '../CardWrapper'
 import CreateLock from './CreateLock'
+import IncreaseAmount from './IncreaseAmount'
+import IncreaseTime from './IncreaseTime'
+import Withdraw from './Withdraw'
 
 const LockForm = () => {
   const {
@@ -16,12 +20,16 @@ const LockForm = () => {
       {!+(lockedAmount?.toString() || 0)
         ? (<CreateLock />)
         : isExpired
-          ? ('Withdraw')
+          ? (<Withdraw />)
           : (
-            <>
-              IncreaseAmount
-              IncreaseTime
-            </>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <IncreaseAmount />
+              </Grid>
+              <Grid item xs={12}>
+                <IncreaseTime />
+              </Grid>
+            </Grid>
           )
       }
     </CardWrapper>
