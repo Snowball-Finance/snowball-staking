@@ -1,7 +1,7 @@
 import { getDayOffset, getEpochSecondForDay } from './date';
 
 const WEEK = 7 * 86400;
-const MAXTIME = 4 * 365 * 86400;
+const MAXTIME = 2 * 365 * 86400;
 
 export const estimateXSnobForDate = (amount, unlockDate) => {
   const rounded = Math.floor(getEpochSecondForDay(unlockDate) / WEEK) * WEEK;
