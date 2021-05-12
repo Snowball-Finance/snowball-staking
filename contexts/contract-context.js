@@ -31,6 +31,7 @@ export function ContractProvider({ children }) {
   const [totalSupply, setTotalSupply] = useState(0);
   const [totalLocked, setTotalLocked] = useState(0);
   const [prices, setPrices] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const lockedValue = useMemo(() => prices.snowball * parseFloat(ethers.utils.formatEther(totalSupply)), [prices?.snowball, totalSupply])
   const totalSnowballValue = useMemo(() => prices.snowball * parseFloat(ethers.utils.formatEther(totalLocked)), [prices?.snowball, totalLocked])
@@ -134,6 +135,7 @@ export function ContractProvider({ children }) {
   }
 
   const createLock = async (data) => {
+    setLoading(true)
     try {
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
@@ -142,7 +144,10 @@ export function ContractProvider({ children }) {
       const { hash: snowballHash } = await snowballContract.approve(CONTRACTS.SNOWCONE, amount);
 
       const snowballTx = await web3.eth.getTransactionReceipt(snowballHash);
-      if (isEmpty(snowballTx)) { return; }
+      if (isEmpty(snowballTx)) {
+        setLoading(false)
+        return;
+      }
 
       const { hash: snowconeHash } = await snowconeContract.create_lock(
         parseEther((data.balance).toString()),
@@ -158,9 +163,11 @@ export function ContractProvider({ children }) {
     } catch (error) {
       console.log('[Error] createLock => ', error)
     }
+    setLoading(false)
   }
 
   const increaseAmount = async (data) => {
+    setLoading(true)
     try {
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
@@ -169,7 +176,10 @@ export function ContractProvider({ children }) {
       const { hash: snowballHash } = await snowballContract.approve(CONTRACTS.SNOWCONE, amount);
 
       const snowballTx = await web3.eth.getTransactionReceipt(snowballHash);
-      if (isEmpty(snowballTx)) { return; }
+      if (isEmpty(snowballTx)) {
+        setLoading(false)
+        return;
+      }
 
       const { hash: snowconeHash } = await snowconeContract.increase_amount(
         parseEther((data.balance).toString()),
@@ -184,9 +194,11 @@ export function ContractProvider({ children }) {
     } catch (error) {
       console.log('[Error] increaseAmount => ', error)
     }
+    setLoading(false)
   }
 
   const increaseTime = async (data) => {
+    setLoading(true)
     try {
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
@@ -204,9 +216,11 @@ export function ContractProvider({ children }) {
     } catch (error) {
       console.log('[Error] increaseTime => ', error)
     }
+    setLoading(false)
   }
 
   const withdraw = async () => {
+    setLoading(true)
     try {
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
@@ -223,11 +237,13 @@ export function ContractProvider({ children }) {
     } catch (error) {
       console.log('[Error] withdraw => ', error)
     }
+    setLoading(false)
   }
 
   return (
     <ContractContext.Provider
       value={{
+        loading,
         prices,
         snowballBalance,
         snowconeBalance,
@@ -258,6 +274,7 @@ export function useContracts() {
   }
 
   const {
+    loading,
     prices,
     snowballBalance,
     snowconeBalance,
@@ -277,6 +294,7 @@ export function useContracts() {
   } = context
 
   return {
+    loading,
     prices,
     snowballBalance,
     snowconeBalance,
