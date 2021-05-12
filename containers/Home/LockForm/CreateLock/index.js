@@ -35,7 +35,9 @@ const CreateLock = () => {
   const { snowballBalance, createLock } = useContracts();
 
   const schema = yup.object().shape({
-    balance: BALANCE_VALID.max(snowballBalance, `This field should be less than ${snowballBalance}.`),
+    balance: BALANCE_VALID.max(snowballBalance, snowballBalance > 0
+      ? `This field should be less than ${snowballBalance}.`
+      : 'Your balance is 0'),
     date: DATE_VALID.test('date',
       'Date should be in 2 years',
       value => new Date(value) <= dateBefore),

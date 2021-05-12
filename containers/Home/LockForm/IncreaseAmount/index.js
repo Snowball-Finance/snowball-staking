@@ -24,7 +24,9 @@ const IncreaseAmount = () => {
   const { snowballBalance, increaseAmount } = useContracts();
 
   const schema = yup.object().shape({
-    balance: BALANCE_VALID.max(snowballBalance, `This field should be less than ${snowballBalance}.`),
+    balance: BALANCE_VALID.max(snowballBalance, snowballBalance > 0
+      ? `This field should be less than ${snowballBalance}.`
+      : 'Your balance is 0'),
   });
 
   const { control, handleSubmit, errors, setValue } = useForm({
