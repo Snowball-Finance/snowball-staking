@@ -10,6 +10,7 @@ import {
   CONTRACTS,
   C_CHAIN_ID
 } from 'config'
+import GAUGE_PROXY_ABI from 'libs/abis/gauge-proxy.json'
 import SNOWBALL_ABI from 'libs/abis/snowball.json'
 import SNOWCONE_ABI from 'libs/abis/snowcone.json'
 import { usePopup } from 'contexts/popup-context'
@@ -22,6 +23,7 @@ export function ContractProvider({ children }) {
   const { setPopUp } = usePopup();
   const { library, chainId, account } = useWeb3React();
 
+  const [gaugeProxyContract, setGaugeProxyContract] = useState();
   const [snowballContract, setSnowballContract] = useState();
   const [snowconeContract, setSnowconeContract] = useState();
   const [snowballBalance, setSnowballBalance] = useState(0);
@@ -62,6 +64,9 @@ export function ContractProvider({ children }) {
   useEffect(() => {
     const getContacts = async () => {
       try {
+        const gaugeProxyContract = new ethers.Contract(CONTRACTS.GAUGE_PROXY, GAUGE_PROXY_ABI, library.getSigner());
+        setGaugeProxyContract(gaugeProxyContract)
+
         const snowballContract = new ethers.Contract(CONTRACTS.SNOWBALL, SNOWBALL_ABI, library.getSigner());
         setSnowballContract(snowballContract)
 
@@ -85,6 +90,36 @@ export function ContractProvider({ children }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [library, chainId]);
+
+  useEffect(() => {
+    if (!isEmpty(gaugeProxyContract)) {
+      getGaugeProxyInfo()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gaugeProxyContract])
+
+  const getGaugeProxyInfo = async () => {
+    try {
+      const tokens = await gaugeProxyContract.tokens();
+      console.log('tokens => ', tokens)
+
+      const gaugeAddresses = await Promise.all(
+        tokens.map((token) => {
+          return gaugeProxyContract.getGauge(token);
+        }),
+      );
+      console.log('gaugeAddresses => ', gaugeAddresses)
+
+      const gaugeWeights = await Promise.all(
+        tokens.map((token) => {
+          return gaugeProxyContract.weights(token);
+        }),
+      );
+      console.log('gaugeWeights => ', gaugeWeights)
+    } catch (error) {
+      console.log('[Error] gaugeProxyContract => ', error)
+    }
+  }
 
   useEffect(() => {
     if (!isEmpty(snowballContract)) {
