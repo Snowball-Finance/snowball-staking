@@ -3,12 +3,13 @@ import { memo } from 'react'
 import { Grid } from '@material-ui/core'
 
 import { useContracts } from 'contexts/contract-context'
+import SnowLoading from 'components/SnowLoading'
 import HomeHeader from './HomeHeader'
 import SnowBalance from './SnowBalance'
 import Unlocked from './Unlocked'
 import TotalLocked from './TotalLocked'
 import LockForm from './LockForm'
-import SnowLoading from 'components/SnowLoading'
+import SnowVote from './SnowVote'
 
 const Home = () => {
   const { loading } = useContracts();
@@ -31,6 +32,9 @@ const Home = () => {
         </Grid>
         <Grid item xs={12}>
           <LockForm />
+        </Grid>
+        <Grid item xs={12}>
+          <SnowVote />
         </Grid>
       </Grid>
     </>
