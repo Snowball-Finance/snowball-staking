@@ -8,28 +8,32 @@ import SnowBalance from './SnowBalance'
 import Unlocked from './Unlocked'
 import TotalLocked from './TotalLocked'
 import LockForm from './LockForm'
+import SnowLoading from 'components/SnowLoading'
 
 const Home = () => {
-  const { } = useContracts();
+  const { loading } = useContracts();
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <HomeHeader />
+    <>
+      {loading && <SnowLoading loading={loading} />}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <HomeHeader />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <SnowBalance />
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <Unlocked />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TotalLocked />
+        </Grid>
+        <Grid item xs={12}>
+          <LockForm />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={3}>
-        <SnowBalance />
-      </Grid>
-      <Grid item xs={12} md={5}>
-        <Unlocked />
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <TotalLocked />
-      </Grid>
-      <Grid item xs={12}>
-        <LockForm />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 
