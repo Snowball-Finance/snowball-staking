@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useContracts } from 'contexts/contract-context'
 import SnowMultiSelect from 'components/UI/SnowMultiSelect'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import TOKENS from 'utils/temp/tokens'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,10 +21,10 @@ const FarmsSelect = ({
   setSelectedFarms
 }) => {
   const classes = useStyles();
-  const { } = useContracts();
+  const { gauges } = useContracts();
 
   const selectAllHandler = () => {
-    setSelectedFarms(TOKENS)
+    setSelectedFarms(gauges)
   }
 
   return (
@@ -33,7 +32,7 @@ const FarmsSelect = ({
       <SnowMultiSelect
         name='farms'
         placeholder='Select farms to boost'
-        items={TOKENS}
+        items={gauges}
         value={selectedFarms}
         onChange={e => setSelectedFarms(e.target.value)}
       />
