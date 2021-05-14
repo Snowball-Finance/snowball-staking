@@ -62,7 +62,7 @@ const theme = responsiveFontSizes(createMuiTheme({
       green: '#28C76F'
     },
     layout: {
-      maxDesktopWidth: 1040,
+      maxDesktopWidth: 1140,
       topAppBarHeight: 65
     },
   }

@@ -63,7 +63,7 @@ const SnowMultiSelect = React.forwardRef(({
       renderValue={(selected) => (
         <div className={classes.chips}>
           {selected.map((value, index) => (
-            <Chip key={index} label={value.LABEL} className={classes.chip} />
+            <Chip key={index} label={value.depositTokenName} className={classes.chip} />
           ))}
         </div>
       )}
@@ -79,7 +79,7 @@ const SnowMultiSelect = React.forwardRef(({
               selected: classes.selected,
             }}
           >
-            {item.LABEL}
+            {item.depositTokenName}
           </MenuItem>
         ))
       }
