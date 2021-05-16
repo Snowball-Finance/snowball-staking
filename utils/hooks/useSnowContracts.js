@@ -13,7 +13,7 @@ import { usePopup } from 'contexts/popup-context'
 
 const useSnowContracts = () => {
   const { setPopUp } = usePopup();
-  const { library, chainId } = useWeb3React();
+  const { library, chainId, account } = useWeb3React();
 
   const [gaugeProxyContract, setGaugeProxyContract] = useState();
   const [snowballContract, setSnowballContract] = useState();
@@ -49,7 +49,7 @@ const useSnowContracts = () => {
       getContacts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [library, chainId]);
+  }, [account, library, chainId]);
 
   return {
     isWrongNetwork,

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
+import detectEthereumProvider from '@metamask/detect-provider'
+import Web3 from 'web3'
 
 import { CONTRACTS } from 'config'
 import GAUGE_TOKEN_ABI from 'libs/abis/gauge-token.json'
@@ -11,17 +13,18 @@ import GAUGE_INFO from 'utils/constants/gauge-info'
 
 const useGauge = ({
   prices,
-  gaugeProxyContract
+  gaugeProxyContract,
+  setLoading
 }) => {
   const { library, account } = useWeb3React();
   const [gauges, setGauges] = useState([]);
 
   useEffect(() => {
-    if (!isEmpty(gaugeProxyContract)) {
+    if (!isEmpty(gaugeProxyContract) && !isEmpty(prices)) {
       getGaugeProxyInfo()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gaugeProxyContract])
+  }, [prices, gaugeProxyContract])
 
   const getGaugeProxyInfo = async () => {
     try {
@@ -62,6 +65,7 @@ const useGauge = ({
       );
 
       const gauges = tokens.map((token, idx) => {
+        const address = gaugeAddresses[idx];
         const gaugeWeight = +balancesUserInfosHarvestables[idx * 13].toString();
         const rewardRate = +balancesUserInfosHarvestables[idx * 13 + 1].toString();
         const derivedSupply = +balancesUserInfosHarvestables[idx * 13 + 2].toString();
@@ -94,7 +98,8 @@ const useGauge = ({
         return {
           allocPoint: gaugeWeight / totalWeight.toString() || 0,
           token,
-          gaugeAddress: gaugeAddresses[idx],
+          address,
+          gaugeAddress: address,
           gaugeWeight,
           totalWeight: +totalWeight.toString(),
           userWeight,
@@ -125,7 +130,33 @@ const useGauge = ({
     }
   }
 
-  return { gauges }
+  const voteFarms = async (tokens, weights) => {
+    setLoading(true)
+    try {
+      const ethereumProvider = await detectEthereumProvider();
+      const web3 = new Web3(ethereumProvider);
+
+      const weightsData = weights.map((weight) => ethers.BigNumber.from((weight * 100).toFixed(0)))
+      const { hash } = await gaugeProxyContract.vote(
+        tokens,
+        weightsData,
+        { gasLimit: 350000 },
+      );
+
+      const tx = await web3.eth.getTransactionReceipt(hash);
+      if (tx) {
+        await getGaugeProxyInfo();
+      }
+    } catch (error) {
+      console.log('[Error] vote => ', error)
+    }
+    setLoading(false)
+  }
+
+  return {
+    gauges,
+    voteFarms
+  }
 }
 
 export default useGauge
