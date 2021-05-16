@@ -19,7 +19,6 @@ const getPairDataPrefill = (
 
   const priceA = prices[a.priceId];
   const priceB = prices[b.priceId];
-
   let totalValueOfPair;
   // In case price one token is not listed on coingecko
   if (priceA) {

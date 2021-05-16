@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
@@ -28,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FarmItem = ({
-  item
+  item,
+  newWeights,
+  value,
+  onChange
 }) => {
   const classes = useStyles();
-  const newWeight = 0;
+  const pickleAPYMin = useMemo(() => item.fullApy * 100 * 0.4, [item.fullApy]);
+  const pickleAPYMax = useMemo(() => item.fullApy * 100, [item.fullApy]);
 
-  const pickleAPYMin = item.fullApy * 100 * 0.4;
-  const pickleAPYMax = item.fullApy * 100;
+  const newWeight = useMemo(() => {
+    const newWeightMaybe = newWeights?.find((x) => x[item.address] >= 0);
+    return newWeightMaybe ? newWeightMaybe[item.address] : null
+  }, [item, newWeights])
 
   return (
     <Grid container spacing={2}>
@@ -82,6 +88,9 @@ const FarmItem = ({
             max: 100
           }}
           endAdornment={'%'}
+          value={value}
+          error={value > 100 ? 'This value should be less than 100%' : ''}
+          onChange={(e) => onChange(e.target.value)}
         />
       </Grid>
     </Grid>

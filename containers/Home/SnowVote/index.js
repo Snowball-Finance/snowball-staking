@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
@@ -26,12 +26,105 @@ const useStyles = makeStyles((theme) => ({
 
 const SnowVote = () => {
   const classes = useStyles();
-  const { isWrongNetwork, gauges } = useContracts();
+  const {
+    isWrongNetwork,
+    snowconeBalance,
+    gauges,
+    voteFarms
+  } = useContracts();
 
   const [selectedFarms, setSelectedFarms] = useState([]);
-  // const [newWeights, setNewWeights] = useState({});
+  const [newWeights, setNewWeights] = useState([]);
+  const [voteWeights, setVoteWeights] = useState({});
 
-  const voteHandler = () => {
+  const totalGaugeWeight = useMemo(() => {
+    let totalValue = 0
+    for (let i = 0; i < gauges?.length; i++) {
+      totalValue += voteWeights[gauges[i].address] || 0;
+    }
+    return totalValue;
+  }, [voteWeights, gauges])
+  const weightsValid = useMemo(() => totalGaugeWeight === 100, [totalGaugeWeight])
+
+  useEffect(() => {
+    const initialize = async () => {
+      const updatedFarms = selectedFarms.map((farm) => gauges.find((gauge) => gauge.address === farm.address))
+      setSelectedFarms(updatedFarms);
+    };
+
+    if (!isEmpty(selectedFarms)) {
+      initialize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gauges]);
+
+  useEffect(() => {
+    let newVoteWeights = {};
+
+    for (const farm of selectedFarms) {
+      newVoteWeights = {
+        ...newVoteWeights,
+        [farm.address]: voteWeights[farm.address] || 0
+      }
+    }
+    setNewWeights([]);
+    setVoteWeights(newVoteWeights);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFarms]);
+
+  const calculateNewWeights = () => {
+    if (weightsValid) {
+      const voteArray = Object.entries(voteWeights).map((e) => ({
+        [e[0]]: e[1],
+      }));
+
+      const newWeights = voteArray.map((x) => {
+        const gaugeAddress = Object.keys(x)[0];
+        const gauge = gauges.find((gauge) => gauge.address === gaugeAddress);
+        if (!isEmpty(gauge) && snowconeBalance) {
+          const xSnobBalance = +snowconeBalance.toString();
+          const estimatedWeight =
+            (gauge.gaugeWeight - gauge.userWeight + (xSnobBalance * Object.values(x)[0]) / 100)
+            / (gauge.totalWeight - gauge.userCurrentWeights + xSnobBalance);
+          return { [gauge.address]: estimatedWeight };
+        } else {
+          return null;
+        }
+      });
+      setNewWeights(newWeights);
+    } else {
+      setNewWeights([]);
+    }
+  };
+
+  useEffect(() => {
+    calculateNewWeights();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weightsValid]);
+
+  const onVoteWeightChange = (address) => (value) => {
+    setVoteWeights((prev) => ({
+      ...prev,
+      [address]: parseFloat(value),
+    }))
+  }
+
+  const voteHandler = async () => {
+    if (isEmpty(gauges) || !weightsValid) return;
+    try {
+      let tokens = [];
+      let weights = [];
+
+      for (const gauge of gauges) {
+        tokens = [...tokens, gauge.token]
+        weights = [...weights, voteWeights[gauge.address]]
+      }
+
+      await voteFarms(tokens, weights);
+      setVoteWeights({})
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -76,16 +169,30 @@ const SnowVote = () => {
                   )
                   : selectedFarms.map((farmItem, index) => (
                     <Grid item xs={12} key={index}>
-                      <FarmItem item={farmItem} />
+                      <FarmItem
+                        item={farmItem}
+                        newWeights={newWeights}
+                        value={voteWeights[farmItem.address] || 0}
+                        onChange={onVoteWeightChange(farmItem.address)}
+                      />
                     </Grid>
                   ))
                 }
                 <Grid item xs={12}>
+                  <Typography align='right' variant='body1' color='textPrimary'>
+                    {`Current allocation: ${totalGaugeWeight}%`}
+                  </Typography>
                   <ContainedButton
                     fullWidth
+                    disabled={!+snowconeBalance?.toString() && !weightsValid}
                     onClick={voteHandler}
                   >
-                    Submit Vote (weights must total 100%)
+                    {+snowconeBalance?.toString()
+                      ? weightsValid
+                        ? 'Submit Vote'
+                        : 'Submit Vote (weights must total 100%)'
+                      : 'xSnob balance needed to vote'
+                    }
                   </ContainedButton>
                 </Grid>
               </Grid>

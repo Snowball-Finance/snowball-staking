@@ -41,9 +41,10 @@ export function ContractProvider({ children }) {
     snowconeContract,
   })
 
-  const { gauges } = useGauge({
+  const { gauges, voteFarms } = useGauge({
     prices,
-    gaugeProxyContract
+    gaugeProxyContract,
+    setLoading
   })
 
   return (
@@ -67,7 +68,8 @@ export function ContractProvider({ children }) {
         createLock,
         increaseAmount,
         increaseTime,
-        withdraw
+        withdraw,
+        voteFarms
       }}
     >
       {children}
@@ -100,7 +102,8 @@ export function useContracts() {
     createLock,
     increaseAmount,
     increaseTime,
-    withdraw
+    withdraw,
+    voteFarms
   } = context
 
   return {
@@ -122,6 +125,7 @@ export function useContracts() {
     createLock,
     increaseAmount,
     increaseTime,
-    withdraw
+    withdraw,
+    voteFarms
   }
 }
