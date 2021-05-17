@@ -117,7 +117,7 @@ const SnowVote = () => {
 
       for (const gauge of gauges) {
         tokens = [...tokens, gauge.token]
-        weights = [...weights, voteWeights[gauge.address]]
+        weights = [...weights, voteWeights[gauge.address] || 0]
       }
 
       await voteFarms(tokens, weights);

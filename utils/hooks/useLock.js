@@ -6,7 +6,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
 
 import { CONTRACTS } from 'config'
-import { isEmpty } from 'utils/helpers/utility'
+import { isEmpty, delay } from 'utils/helpers/utility'
 import { getEpochSecondForDay } from 'utils/helpers/date';
 
 const useLock = ({
@@ -84,26 +84,46 @@ const useLock = ({
   const createLock = async (data) => {
     setLoading(true)
     try {
+      let loop = true
+      let tx = null
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
       const amount = parseEther((data.balance).toString());
       const { hash: snowballHash } = await snowballContract.approve(CONTRACTS.SNOWCONE, amount);
 
-      const snowballTx = await web3.eth.getTransactionReceipt(snowballHash);
-      if (isEmpty(snowballTx)) {
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowballHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (!tx.status) {
         setLoading(false)
         return;
       }
 
       const { hash: snowconeHash } = await snowconeContract.create_lock(
-        parseEther((data.balance).toString()),
+        amount,
         getEpochSecondForDay(new Date(data.date)),
         { gasLimit: 600000 },
       );
 
-      const snowconeTx = await web3.eth.getTransactionReceipt(snowconeHash);
-      if (snowconeTx) {
+      loop = true;
+      tx = null;
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowconeHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();
       }
@@ -116,14 +136,24 @@ const useLock = ({
   const increaseAmount = async (data) => {
     setLoading(true)
     try {
+      let loop = true
+      let tx = null
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
       const amount = parseEther((data.balance).toString());
       const { hash: snowballHash } = await snowballContract.approve(CONTRACTS.SNOWCONE, amount);
 
-      const snowballTx = await web3.eth.getTransactionReceipt(snowballHash);
-      if (isEmpty(snowballTx)) {
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowballHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (!tx.status) {
         setLoading(false)
         return;
       }
@@ -133,8 +163,18 @@ const useLock = ({
         { gasLimit: 350000 },
       );
 
-      const snowconeTx = await web3.eth.getTransactionReceipt(snowconeHash);
-      if (snowconeTx) {
+      loop = true;
+      tx = null;
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowconeHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();
       }
@@ -147,6 +187,8 @@ const useLock = ({
   const increaseTime = async (data) => {
     setLoading(true)
     try {
+      let loop = true
+      let tx = null
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
@@ -155,8 +197,16 @@ const useLock = ({
         { gasLimit: 350000 },
       );
 
-      const snowconeTx = await web3.eth.getTransactionReceipt(snowconeHash);
-      if (snowconeTx) {
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowconeHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();
       }
@@ -169,6 +219,8 @@ const useLock = ({
   const withdraw = async () => {
     setLoading(true)
     try {
+      let loop = true
+      let tx = null
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
@@ -176,8 +228,16 @@ const useLock = ({
         { gasLimit: 350000 },
       );
 
-      const snowconeTx = await web3.eth.getTransactionReceipt(snowconeHash);
-      if (snowconeTx) {
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(snowconeHash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();
       }

@@ -5,9 +5,8 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import Web3 from 'web3'
 
 import { CONTRACTS } from 'config'
-import GAUGE_TOKEN_ABI from 'libs/abis/gauge-token.json'
-import GAUGE_ABI from 'libs/abis/gauge.json'
-import { isEmpty } from 'utils/helpers/utility'
+import { GAUGE_TOKEN_ABI, GAUGE_ABI } from 'libs/abis'
+import { isEmpty, delay } from 'utils/helpers/utility'
 import getPairDataPrefill from 'utils/helpers/getPairDataPrefill'
 import GAUGE_INFO from 'utils/constants/gauge-info'
 
@@ -28,7 +27,6 @@ const useGauge = ({
 
   const getGaugeProxyInfo = async () => {
     try {
-      // const iceQueenContract = new ethers.Contract(CONTRACTS.ICE_QUEEN, ICE_QUEEN_ABI, library.getSigner());
       const tokens = await gaugeProxyContract.tokens();
       const totalWeight = await gaugeProxyContract.totalWeight();
 
@@ -119,7 +117,6 @@ const useGauge = ({
           totalValue: totalValueOfPair,
           valueStakedInGauge,
           numTokensInPool,
-          //     depositToken: erc20.attach(gauge.token),
         };
       });
 
@@ -133,6 +130,8 @@ const useGauge = ({
   const voteFarms = async (tokens, weights) => {
     setLoading(true)
     try {
+      let loop = true
+      let tx = null
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
@@ -143,8 +142,16 @@ const useGauge = ({
         { gasLimit: 350000 },
       );
 
-      const tx = await web3.eth.getTransactionReceipt(hash);
-      if (tx) {
+      while (loop) {
+        tx = await web3.eth.getTransactionReceipt(hash);
+        if (isEmpty(tx)) {
+          await delay(300)
+        } else {
+          loop = false
+        }
+      }
+
+      if (tx.status) {
         await getGaugeProxyInfo();
       }
     } catch (error) {

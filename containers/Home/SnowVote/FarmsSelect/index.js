@@ -10,9 +10,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center'
   },
+  selectContainer: {
+    width: 'calc(100% - 128px)'
+  },
+  buttonContainer: {
+    width: 128,
+    marginLeft: theme.spacing(1)
+  },
   selectAll: {
-    width: 200,
-    marginLeft: theme.spacing(2)
+    width: 120,
   },
 }));
 
@@ -29,19 +35,23 @@ const FarmsSelect = ({
 
   return (
     <div className={classes.root}>
-      <SnowMultiSelect
-        name='farms'
-        placeholder='Select farms to boost'
-        items={gauges}
-        value={selectedFarms}
-        onChange={e => setSelectedFarms(e.target.value)}
-      />
-      <ContainedButton
-        className={classes.selectAll}
-        onClick={selectAllHandler}
-      >
-        Select All
-      </ContainedButton>
+      <div className={classes.selectContainer}>
+        <SnowMultiSelect
+          name='farms'
+          placeholder='Select farms to boost'
+          items={gauges}
+          value={selectedFarms}
+          onChange={e => setSelectedFarms(e.target.value)}
+        />
+      </div>
+      <div className={classes.buttonContainer}>
+        <ContainedButton
+          className={classes.selectAll}
+          onClick={selectAllHandler}
+        >
+          Select All
+        </ContainedButton>
+      </div>
     </div>
   )
 }
