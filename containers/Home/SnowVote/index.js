@@ -184,7 +184,7 @@ const SnowVote = () => {
                   </Typography>
                   <ContainedButton
                     fullWidth
-                    disabled={!+snowconeBalance?.toString() && !weightsValid}
+                    disabled={!+snowconeBalance?.toString() || !weightsValid}
                     onClick={voteHandler}
                   >
                     {+snowconeBalance?.toString()
