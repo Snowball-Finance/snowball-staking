@@ -6,9 +6,7 @@ import {
   CONTRACTS,
   C_CHAIN_ID
 } from 'config'
-import GAUGE_PROXY_ABI from 'libs/abis/gauge-proxy.json'
-import SNOWBALL_ABI from 'libs/abis/snowball.json'
-import SNOWCONE_ABI from 'libs/abis/snowcone.json'
+import { GAUGE_PROXY_ABI, SNOWBALL_ABI, SNOWCONE_ABI } from 'libs/abis'
 import { usePopup } from 'contexts/popup-context'
 
 const useSnowContracts = () => {

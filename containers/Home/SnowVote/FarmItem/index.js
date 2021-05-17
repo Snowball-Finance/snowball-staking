@@ -44,7 +44,7 @@ const FarmItem = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={3} className={classes.imageContainer}>
+      <Grid item xs={12} md={4} className={classes.imageContainer}>
         <img
           alt='lp-icon'
           src={item.icon}
@@ -55,15 +55,7 @@ const FarmItem = ({
           <Typography color='textSecondary' variant='body1'>{item.depositTokenName}</Typography>
         </div>
       </Grid>
-      <Grid item xs={12} sm={6} md={2} className={classes.labelContainer}>
-        <Typography color='textSecondary' variant='body1'>
-          {`${formatAPY(pickleAPYMin)} ~ ${formatAPY(pickleAPYMax)}`}
-        </Typography>
-        <Typography color='textSecondary' variant='body1'>
-          Total APY range
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={2} className={classes.labelContainer}>
+      <Grid item xs={12} sm={6} md={3} className={classes.labelContainer}>
         <Typography color='textSecondary' variant='body1'>
           {`${formatAPY(pickleAPYMin)} ~ ${formatAPY(pickleAPYMax)}`}
         </Typography>
