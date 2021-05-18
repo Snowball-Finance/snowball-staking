@@ -139,7 +139,7 @@ const useGauge = ({
       const { hash } = await gaugeProxyContract.vote(
         tokens,
         weightsData,
-        { gasLimit: 5000000 },
+        { gasLimit: 3000000 },
       );
 
       while (loop) {
