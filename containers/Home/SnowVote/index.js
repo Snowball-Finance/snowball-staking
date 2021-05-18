@@ -116,7 +116,7 @@ const SnowVote = () => {
       let weights = [];
 
       for (const gauge of gauges) {
-        tokens = [...tokens, gauge.token]
+        tokens = [...tokens, gauge.depositToken]
         weights = [...weights, voteWeights[gauge.address] || 0]
       }
 
