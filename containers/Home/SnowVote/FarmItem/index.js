@@ -3,18 +3,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
 import SnowTextField from 'components/UI/SnowTextField'
+import FarmIcon from './FarmIcon'
 import { formatPercent, formatAPY } from 'utils/helpers/format'
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
     display: 'flex',
     alignItems: 'center',
-  },
-  image: {
-    width: 60,
-    height: 60,
-    objectFit: 'container',
-    marginRight: theme.spacing(2)
   },
   labelContainer: {
     display: 'flex',
@@ -34,6 +29,7 @@ const FarmItem = ({
   onChange
 }) => {
   const classes = useStyles();
+
   const pickleAPYMin = useMemo(() => item.fullApy * 100 * 0.4, [item.fullApy]);
   const pickleAPYMax = useMemo(() => item.fullApy * 100, [item.fullApy]);
 
@@ -45,11 +41,7 @@ const FarmItem = ({
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={4} className={classes.imageContainer}>
-        <img
-          alt='lp-icon'
-          src={item.icon}
-          className={classes.image}
-        />
+        <FarmIcon token={item.token} />
         <div>
           <Typography color='textSecondary' variant='body1'>{item.poolName}</Typography>
           <Typography color='textSecondary' variant='body1'>{item.depositTokenName}</Typography>
