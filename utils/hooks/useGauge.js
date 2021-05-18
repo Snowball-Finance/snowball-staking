@@ -80,7 +80,7 @@ const useGauge = ({
         const rewardRatePerYear = derivedSupply
           ? (rewardRate / derivedSupply) * 3600 * 24 * 365
           : Number.POSITIVE_INFINITY;
-        const { tokenName, poolName, icon, depositToken } = GAUGE_INFO[token];
+        const { tokenName, poolName, icon } = GAUGE_INFO[token];
         const { totalValueOfPair, pricePerToken } = getPairDataPrefill(
           prices,
           token,
@@ -108,7 +108,6 @@ const useGauge = ({
           balance,
           staked,
           harvestable,
-          depositToken,
           depositTokenName: tokenName,
           poolName,
           icon,
@@ -136,11 +135,11 @@ const useGauge = ({
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
-      const weightsData = weights.map((weight) => ethers.BigNumber.from((weight * 100).toFixed(0)))
+      const weightsData = weights.map((weight) => ethers.BigNumber.from(weight))
       const { hash } = await gaugeProxyContract.vote(
         tokens,
         weightsData,
-        { gasLimit: 350000 },
+        { gasLimit: 5000000 },
       );
 
       while (loop) {
