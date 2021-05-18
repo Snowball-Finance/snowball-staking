@@ -11,7 +11,9 @@ const usePrices = () => {
         ids: [
           'snowball-token',
           'pangolin',
-          'wrapped-avax'
+          'wrapped-avax',
+          'binance-usd',
+          'frax'
         ],
         vs_currencies: ['usd'],
       });
@@ -20,6 +22,8 @@ const usePrices = () => {
         snowball: response['snowball-token']?.usd || 0,
         png: response['pangolin']?.usd || 0,
         wavax: response['wrapped-avax']?.usd || 0,
+        busd: response['binance-usd']?.usd || 0,
+        frax: response['frax']?.usd || 0,
       };
       setPrices(prices);
     };
