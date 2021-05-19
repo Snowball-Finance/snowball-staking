@@ -1,14 +1,14 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import SnowSelect from 'components/UI/SnowSelect'
 import SnowTextField from 'components/UI/SnowTextField'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import {
   SELECT_VALID,
   BALANCE_VALID
@@ -37,13 +37,13 @@ const CalculatorForm = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     try {
       console.log(data);
     } catch (error) {
       console.log(error)
     }
-  };
+  }, []);
 
   return (
     <form

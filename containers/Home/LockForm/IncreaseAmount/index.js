@@ -1,5 +1,5 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
@@ -33,14 +33,14 @@ const IncreaseAmount = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     try {
       await increaseAmount(data)
       await setValue('balance', 0)
     } catch (error) {
       console.log(error)
     }
-  };
+  }, [increaseAmount, setValue]);
 
   return (
     <form

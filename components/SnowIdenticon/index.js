@@ -7,7 +7,7 @@ import COLORS from 'utils/constants/colors'
 
 const useStyles = makeStyles(() => ({
   root: {
-    borderRadius: '50%',
+    borderRadius: '50%'
   }
 }));
 
@@ -32,4 +32,4 @@ const SnowIdenticon = React.forwardRef(({
   );
 });
 
-export default memo(SnowIdenticon);
+export default memo(SnowIdenticon)

@@ -1,5 +1,5 @@
 
-import { memo, useEffect, useMemo } from 'react'
+import { memo, useCallback, useEffect, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
@@ -17,7 +17,7 @@ import {
   getDayOffset,
   getWeekDiff,
 } from 'utils/helpers/date';
-import { estimateXSnobForDate } from 'utils/helpers/stakeDate';
+import { estimateXSnobForDate } from 'utils/helpers/stakeDate'
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -50,7 +50,7 @@ const CreateLock = () => {
 
   const watchAllFields = watch()
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     try {
       await createLock(data)
       setValue('balance', 0)
@@ -59,7 +59,7 @@ const CreateLock = () => {
     } catch (error) {
       console.log(error)
     }
-  };
+  }, [createLock, setValue]);
 
   useEffect(() => {
     switch (watchAllFields.duration) {
@@ -132,7 +132,8 @@ const CreateLock = () => {
             variant='body1'
             color='textSecondary'
           >
-            Note: your selected date will be rounded to the nearest weekly xSNOB epoch
+            Note: your selected date will be rounded to the nearest
+            weekly xSNOB epoch
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -151,7 +152,10 @@ const CreateLock = () => {
           >
             {'You will receive '}
             <b>
-              {watchAllFields.balance ? estimateXSnobForDate(+watchAllFields.balance, watchAllFields.date).toFixed(4) : 0}
+              {watchAllFields.balance
+                ? estimateXSnobForDate(+watchAllFields.balance, watchAllFields.date).toFixed(4)
+                : 0
+              }
             </b>
             {' xSnob'}
           </Typography>

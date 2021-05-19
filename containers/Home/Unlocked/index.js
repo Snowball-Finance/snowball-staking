@@ -6,10 +6,9 @@ import { formatEther } from 'ethers/lib/utils';
 import { useContracts } from 'contexts/contract-context'
 import CoinIcon from 'components/Icons/CoinIcon'
 import CardWrapper from '../CardWrapper'
-import theme from 'styles/theme'
 import { formatDate } from 'utils/helpers/date';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     display: 'flex',
     alignItems: 'center'
@@ -53,7 +52,8 @@ const Unlocked = () => {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
               })
-            : '--'}
+            : '--'
+          }
         </Typography>
         <CoinIcon className={classes.coin} />
         <Typography

@@ -9,7 +9,6 @@ import MAIN_GAUGE_ABI from 'libs/abis/main/gauge.json'
 import TEST_GAUGE_ABI from 'libs/abis/test/gauge.json'
 import MAIN_GAUGE_TOKEN_ABI from 'libs/abis/main/gauge-token.json'
 import TEST_GAUGE_TOKEN_ABI from 'libs/abis/test/gauge-token.json'
-
 import { IS_MAINNET } from 'config'
 
 const GAUGE_PROXY_ABI = IS_MAINNET ? MAIN_GAUGE_PROXY_ABI : TEST_GAUGE_PROXY_ABI
