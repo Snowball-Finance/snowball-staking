@@ -172,7 +172,7 @@ const SnowVote = () => {
                       <FarmItem
                         item={farmItem}
                         newWeights={newWeights}
-                        value={voteWeights[farmItem.address] || 0}
+                        value={voteWeights[farmItem.address]}
                         onChange={onVoteWeightChange(farmItem.address)}
                       />
                     </Grid>
