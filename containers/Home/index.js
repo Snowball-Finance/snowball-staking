@@ -1,6 +1,6 @@
 
 import { memo } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 
 import { useContracts } from 'contexts/contract-context'
 import SnowLoading from 'components/SnowLoading'
@@ -12,7 +12,7 @@ import LockForm from './LockForm'
 import SnowVote from './SnowVote'
 
 const Home = () => {
-  const { loading } = useContracts();
+  const { loading, isWrongNetwork } = useContracts();
 
   return (
     <>
@@ -30,12 +30,23 @@ const Home = () => {
         <Grid item xs={12} md={4}>
           <TotalLocked />
         </Grid>
-        <Grid item xs={12}>
-          <LockForm />
-        </Grid>
-        <Grid item xs={12}>
-          <SnowVote />
-        </Grid>
+        {isWrongNetwork
+          ? (
+            <Grid item xs={12}>
+              <Typography variant='body1' color='textSecondary'>
+                Please switch to Avalanche Chain.
+              </Typography>
+            </Grid>
+          ) : (
+            <>
+              <Grid item xs={12}>
+                <LockForm />
+              </Grid>
+              <Grid item xs={12}>
+                <SnowVote />
+              </Grid>
+            </>
+          )}
       </Grid>
     </>
   )

@@ -71,15 +71,12 @@ const SnowTextField = React.forwardRef(({
 
   return (
     <div className={clsx(classes.root, className)}>
-      {
-        !!label &&
+      {!!label &&
         <div className={classes.labelContainer}>
           <Typography color='textSecondary'>
             {label}
           </Typography>
-
-          {
-            onMax &&
+          {onMax &&
             <Typography
               color='textPrimary'
               className={classes.max}
@@ -108,8 +105,7 @@ const SnowTextField = React.forwardRef(({
         }}
         {...rest}
       />
-      {
-        !!error &&
+      {!!error &&
         <Typography
           variant='subtitle2'
           color='error'

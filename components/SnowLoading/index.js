@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: props.height ? props.height : '100%',
+    height: props.height ? props.height : '100%'
   })
 }));
 

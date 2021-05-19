@@ -1,11 +1,11 @@
 
 import React, { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Typography } from '@material-ui/core'
 import {
   DatePicker,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers'
-import { Typography } from '@material-ui/core'
 import clsx from 'clsx'
 import DateFnsUtils from '@date-io/date-fns'
 import 'date-fns'
@@ -70,15 +70,12 @@ const SnowDatePicker = React.forwardRef(({
 
   return (
     <div className={clsx(classes.root, className)}>
-      {
-        !!label &&
+      {!!label &&
         <div className={classes.labelContainer}>
           <Typography color='textSecondary'>
             {label}
           </Typography>
-
-          {
-            onMax &&
+          {onMax &&
             <Typography
               color='textPrimary'
               className={classes.max}
@@ -109,8 +106,7 @@ const SnowDatePicker = React.forwardRef(({
           }}
         />
       </MuiPickersUtilsProvider>
-      {
-        !!error &&
+      {!!error &&
         <Typography variant='subtitle2' color='error'>
           {error}
         </Typography>

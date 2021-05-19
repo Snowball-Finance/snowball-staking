@@ -124,8 +124,7 @@ const SnowDialog = ({
           disableSpacing
           className={classes.dialogActions}
         >
-          {
-            !!cancelLabel &&
+          {!!cancelLabel &&
             <ContainedButton
               autoFocus
               onClick={onCancel}
@@ -134,8 +133,7 @@ const SnowDialog = ({
               {cancelLabel}
             </ContainedButton>
           }
-          {
-            !!confirmLabel &&
+          {!!confirmLabel &&
             <ContainedButton
               onClick={onConfirm}
               className={classes.button}

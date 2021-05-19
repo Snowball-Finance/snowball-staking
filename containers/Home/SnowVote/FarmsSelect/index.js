@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useContracts } from 'contexts/contract-context'
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1)
   },
   selectAll: {
-    width: 120,
+    width: 120
   },
 }));
 
@@ -29,9 +29,9 @@ const FarmsSelect = ({
   const classes = useStyles();
   const { gauges } = useContracts();
 
-  const selectAllHandler = () => {
+  const selectAllHandler = useCallback(() => {
     setSelectedFarms(gauges)
-  }
+  }, [gauges, setSelectedFarms])
 
   return (
     <div className={classes.root}>

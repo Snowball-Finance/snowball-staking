@@ -80,7 +80,7 @@ const useGauge = ({
         const rewardRatePerYear = derivedSupply
           ? (rewardRate / derivedSupply) * 3600 * 24 * 365
           : Number.POSITIVE_INFINITY;
-        const { tokenName, poolName, icon } = GAUGE_INFO[token];
+        const { tokenName, poolName } = GAUGE_INFO[token];
         const { totalValueOfPair, pricePerToken } = getPairDataPrefill(
           prices,
           token,
@@ -110,7 +110,6 @@ const useGauge = ({
           harvestable,
           depositTokenName: tokenName,
           poolName,
-          icon,
           rewardRatePerYear,
           fullApy,
           usdPerToken: pricePerToken,

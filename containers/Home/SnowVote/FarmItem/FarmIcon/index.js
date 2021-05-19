@@ -43,11 +43,13 @@ const FarmIcon = ({
         src={LP_ICONS[a.priceId]}
         className={classes.mainImage}
       />
-      <img
-        alt='token-icon'
-        src={LP_ICONS[b.priceId]}
-        className={classes.subImage}
-      />
+      {LP_ICONS[b.priceId] &&
+        <img
+          alt='token-icon'
+          src={LP_ICONS[b.priceId]}
+          className={classes.subImage}
+        />
+      }
     </div>
   )
 }

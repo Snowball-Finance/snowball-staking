@@ -308,7 +308,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
     },
     b: {
       address: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
-      priceId: 'dai',
+      priceId: 'sub',
       decimals: 18
     }
   },
@@ -322,7 +322,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
     },
     b: {
       address: '0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB',
-      priceId: 'tusd',
+      priceId: 'sub',
       decimals: 18
     }
   },

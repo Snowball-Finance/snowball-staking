@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 const SnowVote = () => {
   const classes = useStyles();
   const {
-    isWrongNetwork,
     snowconeBalance,
     gauges,
     voteFarms
@@ -135,69 +134,64 @@ const SnowVote = () => {
       >
         Vote
       </Typography>
-      {isWrongNetwork
+      {isEmpty(gauges)
         ? (
           <Typography variant='body1' color='textSecondary'>
-            Please switch to Avalanche Chain
+            Loading Farms
           </Typography>
-        ) : isEmpty(gauges)
-          ? (
-            <Typography variant='body1' color='textSecondary'>
-              Loading Farms
-            </Typography>
-          ) : (
-            <CardWrapper title='Select which farms to allocate SNOB rewards to using your xSNOB balance'>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <FarmsSelect
-                    selectedFarms={selectedFarms}
-                    setSelectedFarms={setSelectedFarms}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant='body1'>
-                    Selected Farms
-                  </Typography>
-                </Grid>
-                {isEmpty(selectedFarms)
-                  ? (
-                    <Grid item xs={12}>
-                      <Typography variant='body1' color='textSecondary'>
-                        Please select farms from dropdown
-                      </Typography>
-                    </Grid>
-                  )
-                  : selectedFarms.map((farmItem, index) => (
-                    <Grid item xs={12} key={index}>
-                      <FarmItem
-                        item={farmItem}
-                        newWeights={newWeights}
-                        value={voteWeights[farmItem.address] || 0}
-                        onChange={onVoteWeightChange(farmItem.address)}
-                      />
-                    </Grid>
-                  ))
-                }
-                <Grid item xs={12}>
-                  <Typography align='right' variant='body1' color='textPrimary'>
-                    {`Current allocation: ${totalGaugeWeight}%`}
-                  </Typography>
-                  <ContainedButton
-                    fullWidth
-                    disabled={!+snowconeBalance?.toString() || !weightsValid}
-                    onClick={voteHandler}
-                  >
-                    {+snowconeBalance?.toString()
-                      ? weightsValid
-                        ? 'Submit Vote'
-                        : 'Submit Vote (weights must total 100%)'
-                      : 'xSnob balance needed to vote'
-                    }
-                  </ContainedButton>
-                </Grid>
+        ) : (
+          <CardWrapper title='Select which farms to allocate SNOB rewards to using your xSNOB balance'>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FarmsSelect
+                  selectedFarms={selectedFarms}
+                  setSelectedFarms={setSelectedFarms}
+                />
               </Grid>
-            </CardWrapper>
-          )
+              <Grid item xs={12}>
+                <Typography variant='body1'>
+                  Selected Farms
+                </Typography>
+              </Grid>
+              {isEmpty(selectedFarms)
+                ? (
+                  <Grid item xs={12}>
+                    <Typography variant='body1' color='textSecondary'>
+                      Please select farms from dropdown
+                      </Typography>
+                  </Grid>
+                )
+                : selectedFarms.map((farmItem, index) => (
+                  <Grid item xs={12} key={index}>
+                    <FarmItem
+                      item={farmItem}
+                      newWeights={newWeights}
+                      value={voteWeights[farmItem.address]}
+                      onChange={onVoteWeightChange(farmItem.address)}
+                    />
+                  </Grid>
+                ))
+              }
+              <Grid item xs={12}>
+                <Typography align='right' variant='body1' color='textPrimary'>
+                  {`Current allocation: ${totalGaugeWeight}%`}
+                </Typography>
+                <ContainedButton
+                  fullWidth
+                  disabled={!+snowconeBalance?.toString() || !weightsValid}
+                  onClick={voteHandler}
+                >
+                  {+snowconeBalance?.toString()
+                    ? weightsValid
+                      ? 'Submit Vote'
+                      : 'Submit Vote (weights must total 100%)'
+                    : 'xSnob balance needed to vote'
+                  }
+                </ContainedButton>
+              </Grid>
+            </Grid>
+          </CardWrapper>
+        )
       }
     </>
   )

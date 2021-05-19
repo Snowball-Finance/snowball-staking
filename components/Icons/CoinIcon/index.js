@@ -1,24 +1,24 @@
 
 import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
 
 import { LOGO_IMAGE_PATH } from 'utils/constants/image-paths'
-import clsx from 'clsx';
 
 const useStyles = makeStyles(() => ({
   picture: {
-    display: 'flex',
+    display: 'flex'
   },
   img: {
     height: 18,
-    objectFit: 'contain',
+    objectFit: 'contain'
   },
 }));
 
 const CoinIcon = ({
   className
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <picture className={clsx(classes.picture, className)}>
@@ -32,4 +32,4 @@ const CoinIcon = ({
   )
 }
 
-export default memo(CoinIcon);
+export default memo(CoinIcon)

@@ -69,20 +69,18 @@ const SnowMultiSelect = React.forwardRef(({
       )}
       {...rest}
     >
-      {
-        items.map((item, index) => (
-          <MenuItem
-            key={index}
-            value={item}
-            className={classes.item}
-            classes={{
-              selected: classes.selected,
-            }}
-          >
-            {item.depositTokenName}
-          </MenuItem>
-        ))
-      }
+      {items.map((item, index) => (
+        <MenuItem
+          key={index}
+          value={item}
+          className={classes.item}
+          classes={{
+            selected: classes.selected,
+          }}
+        >
+          {item.depositTokenName}
+        </MenuItem>
+      ))}
     </Select>
   );
 });

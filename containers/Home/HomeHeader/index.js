@@ -6,12 +6,12 @@ import { Typography } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   }
 }));
 
@@ -30,7 +30,8 @@ const HomeHeader = () => {
         variant='body1'
         color='textSecondary'
       >
-        Stake your Snowballs to receive a portion of the profits from Gauges.
+        Stake your Snowballs to receive a portion of the
+        profits from Gauges.
       </Typography>
     </section>
   );

@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { estimateXSnobForPeriod } from 'utils/helpers/stakeDate';
+import { estimateXSnobForPeriod } from 'utils/helpers/stakeDate'
 
 const useStyles = makeStyles((theme) => ({
   group: {
@@ -75,8 +75,7 @@ const SnowRadio = React.forwardRef(({
           />
         ))}
       </RadioGroup>
-      {
-        !!error &&
+      {!!error &&
         <Typography variant='subtitle2' color='error'>
           {error}
         </Typography>

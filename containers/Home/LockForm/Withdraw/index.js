@@ -1,5 +1,5 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 
@@ -18,9 +18,9 @@ const Withdraw = () => {
   const classes = useStyles();
   const { withdraw } = useContracts();
 
-  const withdrawHandler = () => {
+  const withdrawHandler = useCallback(() => {
     withdraw()
-  };
+  }, [withdraw]);
 
   return (
     <div className={classes.form}>

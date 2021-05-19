@@ -1,5 +1,5 @@
 
-import { memo, useEffect, useMemo } from 'react'
+import { memo, useCallback, useEffect, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
@@ -47,7 +47,7 @@ const IncreaseTime = () => {
 
   const watchAllFields = watch()
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     try {
       await increaseTime(data)
       setValue('date', dateAfter)
@@ -55,7 +55,7 @@ const IncreaseTime = () => {
     } catch (error) {
       console.log(error)
     }
-  };
+  }, [dateAfter, increaseTime, setValue]);
 
   useEffect(() => {
     switch (watchAllFields.duration) {
