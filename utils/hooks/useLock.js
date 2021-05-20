@@ -109,7 +109,7 @@ const useLock = ({
       const { hash: snowconeHash } = await snowconeContract.create_lock(
         amount,
         getEpochSecondForDay(new Date(data.date)),
-        { gasLimit: 600000 },
+        { gasLimit: 3000000 },
       );
 
       loop = true;
@@ -159,9 +159,10 @@ const useLock = ({
       }
 
       const { hash: snowconeHash } = await snowconeContract.increase_amount(
-        parseEther((data.balance).toString()),
-        { gasLimit: 350000 },
+        amount,
+        { gasLimit: 3000000 },
       );
+      console.log('tx1 => ', tx)
 
       loop = true;
       tx = null;
@@ -174,6 +175,7 @@ const useLock = ({
         }
       }
 
+      console.log('tx2 => ', tx)
       if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();
@@ -194,7 +196,7 @@ const useLock = ({
 
       const { hash: snowconeHash } = await snowconeContract.increase_unlock_time(
         getEpochSecondForDay(new Date(data.date)),
-        { gasLimit: 350000 },
+        { gasLimit: 3000000 },
       );
 
       while (loop) {
@@ -225,7 +227,7 @@ const useLock = ({
       const web3 = new Web3(ethereumProvider);
 
       const { hash: snowconeHash } = await snowconeContract.withdraw(
-        { gasLimit: 350000 },
+        { gasLimit: 3000000 },
       );
 
       while (loop) {
