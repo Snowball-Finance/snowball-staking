@@ -9,6 +9,7 @@ import SnowBalance from './SnowBalance'
 import Unlocked from './Unlocked'
 import TotalLocked from './TotalLocked'
 import LockForm from './LockForm'
+import SnowClaim from './SnowClaim'
 import SnowVote from './SnowVote'
 
 const Home = () => {
@@ -41,6 +42,9 @@ const Home = () => {
             <>
               <Grid item xs={12}>
                 <LockForm />
+              </Grid>
+              <Grid item xs={12}>
+                <SnowClaim />
               </Grid>
               <Grid item xs={12}>
                 <SnowVote />
