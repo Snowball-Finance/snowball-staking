@@ -101,15 +101,17 @@ const CreateLock = () => {
       className={classes.form}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div>Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.</div>
+      <br/>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Controller
             as={<SnowTextField />}
             type='number'
             name='balance'
-            label={`Balance: ${parseFloat(snowballBalance).toFixed(3)}`}
+            label={`Balance: ${parseFloat(snowballBalance).toFixed(3) - 0.001}`}
             placeholder='Balance'
-            onMax={() => setValue('balance', snowballBalance)}
+            onMax={() => setValue('balance', (parseFloat(snowballBalance).toFixed(3) - 0.001))}
             error={errors.balance?.message}
             control={control}
             defaultValue={0.00}

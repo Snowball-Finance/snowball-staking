@@ -32,6 +32,8 @@ const HomeHeader = () => {
       >
         Stake your Snowballs to receive a portion of the
         profits from Gauges.
+
+        Learn more from our <a href="https://snowballs.gitbook.io/snowball-docs/understanding-snowball/staked-snob-xsnob">Documentation</a>
       </Typography>
     </section>
   );
