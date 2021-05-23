@@ -145,6 +145,20 @@ const MAIN_GAUGE_INFO = Object.freeze({
     }
   },
   '0x53B37b9A6631C462d74D65d61e1c056ea9dAa637': {
+    tokenName: '(removed)',
+    poolName: 'PNG-ETHER Pool',
+    a: {
+      address: '0x60781C2586D68229fde47564546784ab3fACA982',
+      priceId: 'png',
+      decimals: 18
+    },
+    b: {
+      address: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
+      priceId: 'ether',
+      decimals: 18
+    }
+  },
+  '0x3815f36C3d60d658797958EAD8778f6500be16Df': {
     tokenName: 'PNG-ETHER',
     poolName: 'PNG-ETHER Pool',
     a: {
