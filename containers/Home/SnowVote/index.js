@@ -134,6 +134,13 @@ const SnowVote = () => {
       >
         Vote
       </Typography>
+      <Typography
+        paragraph='true'
+        color='textSecondary'
+      >
+        Once you&apos;ve voted your votes will continue to rollover each week, there&apos;s no need to revote unless you want to change the distribution you&apos;ve voted for.
+      </Typography>
+      
       {isEmpty(gauges)
         ? (
           <Typography variant='body1' color='textSecondary'>
