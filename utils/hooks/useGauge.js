@@ -29,15 +29,16 @@ const useGauge = ({
     try {
       const tokens = await gaugeProxyContract.tokens();
       const totalWeight = await gaugeProxyContract.totalWeight();
+      const whiteListedTokens = tokens.slice(0,24);
 
       const gaugeAddresses = await Promise.all(
-        tokens.map((token) => {
+        whiteListedTokens.map((token) => {
           return gaugeProxyContract.getGauge(token);
         }),
       );
 
       const balancesUserInfosHarvestables = await Promise.all(
-        tokens.flatMap((token, index) => {
+        whiteListedTokens.flatMap((token, index) => {
           const { a, b } = GAUGE_INFO[token];
           const gaugeTokenContract = new ethers.Contract(token, GAUGE_TOKEN_ABI, library.getSigner());
           const aTokenContract = new ethers.Contract(a.address, GAUGE_TOKEN_ABI, library.getSigner());
@@ -62,7 +63,7 @@ const useGauge = ({
         }),
       );
 
-      const gauges = tokens.map((token, idx) => {
+      const gauges = whiteListedTokens.map((token, idx) => {
         const address = gaugeAddresses[idx];
         const gaugeWeight = +balancesUserInfosHarvestables[idx * 13].toString();
         const rewardRate = +balancesUserInfosHarvestables[idx * 13 + 1].toString();
@@ -138,7 +139,7 @@ const useGauge = ({
       const { hash } = await gaugeProxyContract.vote(
         tokens,
         weightsData,
-        { gasLimit: 3000000 },
+        { gasLimit: 1000000 },
       );
 
       while (loop) {

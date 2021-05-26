@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44e57ca2-411d-48e2-9a3b-12bd91e6198f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/assets/images/lp-icons/VSO.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/constants/gauge-info.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/gauge-info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/constants/lp-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/lp-icons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/hooks/useGauge.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hooks/useGauge.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +34,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/images/lp-icons" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -58,7 +60,10 @@
       <workItem from="1621474061170" duration="1968000" />
       <workItem from="1621530381040" duration="152000" />
       <workItem from="1621530555042" duration="6613000" />
-      <workItem from="1621795913395" duration="1212000" />
+      <workItem from="1621795913395" duration="2502000" />
+      <workItem from="1621896024415" duration="739000" />
+      <workItem from="1621990155501" duration="898000" />
+      <workItem from="1621992499443" duration="670000" />
     </task>
     <servers />
   </component>

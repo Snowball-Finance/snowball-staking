@@ -146,7 +146,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
   },
   '0x53B37b9A6631C462d74D65d61e1c056ea9dAa637': {
     tokenName: '(removed)',
-    poolName: 'PNG-ETHER Pool',
+    poolName: '(removed)',
     a: {
       address: '0x60781C2586D68229fde47564546784ab3fACA982',
       priceId: 'png',
@@ -309,6 +309,34 @@ const MAIN_GAUGE_INFO = Object.freeze({
     b: {
       address: '0xf39f9671906d8630812f9d9863bBEf5D523c84Ab',
       priceId: 'uni',
+      decimals: 18
+    }
+  },
+  '0x888Ab4CB2279bDB1A81c49451581d7c243AffbEf': {
+    tokenName: 'WAVAX-VSO',
+    poolName: 'WAVAX-VSO Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a',
+      priceId: 'vso',
+      decimals: 18
+    }
+  },
+  '0x8309C64390F376fD778BDd701d54d1F8DFfe1F39': {
+    tokenName: 'PNG-VSO',
+    poolName: 'PNG-VSO Pool',
+    a: {
+      address: '0x60781C2586D68229fde47564546784ab3fACA982',
+      priceId: 'png',
+      decimals: 18
+    },
+    b: {
+      address: '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a',
+      priceId: 'vso',
       decimals: 18
     }
   },
