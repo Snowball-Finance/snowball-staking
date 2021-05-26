@@ -101,8 +101,13 @@ const CreateLock = () => {
       className={classes.form}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div>Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.</div>
-      <br/>
+      <Typography
+        paragraph='true'
+        variant='body1'
+        color='textSecondary'
+      >
+        Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Controller
