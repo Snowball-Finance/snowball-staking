@@ -1,7 +1,7 @@
 
 import { memo, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -48,8 +48,13 @@ const IncreaseAmount = () => {
       className={classes.form}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div>Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.</div>
-      <br/>
+      <Typography
+        paragraph='true'
+        variant='body1'
+        color='textSecondary'
+      >
+        Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Controller
