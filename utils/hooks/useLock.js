@@ -162,7 +162,6 @@ const useLock = ({
         amount,
         { gasLimit: 1000000 },
       );
-      console.log('tx1 => ', tx)
 
       loop = true;
       tx = null;
@@ -175,7 +174,6 @@ const useLock = ({
         }
       }
 
-      console.log('tx2 => ', tx)
       if (tx.status) {
         await getSnowballInfo();
         await getSnowconeInfo();

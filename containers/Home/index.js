@@ -10,6 +10,7 @@ import Unlocked from './Unlocked'
 import TotalLocked from './TotalLocked'
 import LockForm from './LockForm'
 import SnowVote from './SnowVote'
+import SnowClaim from './SnowClaim'
 
 const Home = () => {
   const { loading, isWrongNetwork } = useContracts();
@@ -41,6 +42,9 @@ const Home = () => {
             <>
               <Grid item xs={12}>
                 <LockForm />
+              </Grid>
+              <Grid item xs={12}>
+                <SnowClaim />
               </Grid>
               <Grid item xs={12}>
                 <SnowVote />
