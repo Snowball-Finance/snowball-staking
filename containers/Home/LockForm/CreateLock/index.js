@@ -102,11 +102,13 @@ const CreateLock = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Typography
-        paragraph='true'
         variant='body1'
         color='textSecondary'
+        gutterBottom
       >
-        Each wallet can only lock their SNOB for a single period of time. To lock different amounts of SNOB for different periods of time, use multiple wallets.
+        Each wallet can only lock their SNOB for a single period of time.
+        To lock different amounts of SNOB for different periods of time,
+        use multiple wallets.
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>

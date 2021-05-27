@@ -3,6 +3,7 @@ import { createContext, useState, useContext } from 'react'
 import useSnowContracts from 'utils/hooks/useSnowContracts'
 import usePrices from 'utils/hooks/usePrices'
 import useLock from 'utils/hooks/useLock'
+import useClaim from 'utils/hooks/useClaim'
 import useGauge from 'utils/hooks/useGauge'
 
 const ContractContext = createContext(null)
@@ -16,6 +17,7 @@ export function ContractProvider({ children }) {
     gaugeProxyContract,
     snowballContract,
     snowconeContract,
+    feeDistributorContract,
   } = useSnowContracts()
 
   const {
@@ -38,7 +40,16 @@ export function ContractProvider({ children }) {
     prices,
     setLoading,
     snowballContract,
-    snowconeContract,
+    snowconeContract
+  })
+
+  const {
+    claim,
+    userClaimable,
+    nextDistribution,
+  } = useClaim({
+    setLoading,
+    feeDistributorContract,
   })
 
   const { gauges, voteFarms } = useGauge({
@@ -65,6 +76,9 @@ export function ContractProvider({ children }) {
         isLocked,
         isExpired,
         gauges,
+        userClaimable,
+        nextDistribution,
+        claim,
         createLock,
         increaseAmount,
         increaseTime,
@@ -99,6 +113,9 @@ export function useContracts() {
     isLocked,
     isExpired,
     gauges,
+    userClaimable,
+    nextDistribution,
+    claim,
     createLock,
     increaseAmount,
     increaseTime,
@@ -122,6 +139,9 @@ export function useContracts() {
     isLocked,
     isExpired,
     gauges,
+    userClaimable,
+    nextDistribution,
+    claim,
     createLock,
     increaseAmount,
     increaseTime,

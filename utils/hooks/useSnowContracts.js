@@ -6,7 +6,12 @@ import {
   CONTRACTS,
   C_CHAIN_ID
 } from 'config'
-import { GAUGE_PROXY_ABI, SNOWBALL_ABI, SNOWCONE_ABI } from 'libs/abis'
+import {
+  GAUGE_PROXY_ABI,
+  SNOWBALL_ABI,
+  SNOWCONE_ABI,
+  FEE_DISTRIBUTOR_ABI
+} from 'libs/abis'
 import { usePopup } from 'contexts/popup-context'
 
 const useSnowContracts = () => {
@@ -16,6 +21,7 @@ const useSnowContracts = () => {
   const [gaugeProxyContract, setGaugeProxyContract] = useState();
   const [snowballContract, setSnowballContract] = useState();
   const [snowconeContract, setSnowconeContract] = useState();
+  const [feeDistributorContract, setFeeDistributorContract] = useState();
 
   const isWrongNetwork = useMemo(() => chainId !== C_CHAIN_ID, [chainId])
 
@@ -27,6 +33,9 @@ const useSnowContracts = () => {
 
         const snowballContract = new ethers.Contract(CONTRACTS.SNOWBALL, SNOWBALL_ABI, library.getSigner());
         setSnowballContract(snowballContract)
+
+        const feeDistributorContract = new ethers.Contract(CONTRACTS.FEE_DISTRIBUTOR, FEE_DISTRIBUTOR_ABI, library.getSigner());
+        setFeeDistributorContract(feeDistributorContract)
 
         const snowconeContract = new ethers.Contract(CONTRACTS.SNOWCONE, SNOWCONE_ABI, library.getSigner());
         setSnowconeContract(snowconeContract)
@@ -54,6 +63,7 @@ const useSnowContracts = () => {
     gaugeProxyContract,
     snowballContract,
     snowconeContract,
+    feeDistributorContract
   }
 }
 
