@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
 import Logo from 'components/Logo'
+import Navigation from 'components/Navigation'
 import ConnectWallet from './ConnectWallet'
 import { useCommonStyles } from 'styles/use-styles'
 
@@ -34,6 +35,7 @@ const TopAppBar = () => {
     >
       <Toolbar className={clsx(classes.toolBar, commonClasses.containerWidth)}>
         <Logo />
+        <Navigation />
         <ConnectWallet />
       </Toolbar>
     </AppBar>
