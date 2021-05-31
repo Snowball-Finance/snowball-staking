@@ -17,27 +17,28 @@ const SnowClaim = () => {
   const claimable = useMemo(() =>
     userClaimable ? parseFloat(formatEther(userClaimable)) : null
     , [userClaimable]);
+  return (<div></div>)
 
-  return (
-    <CardWrapper title='Claim'>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography color='textSecondary' variant='body1'>
-            {`Next distribution: ${nextDistribution?.toDateString()}`}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <ContainedButton
-            fullWidth
-            disabled={!claimable}
-            onClick={claim}
-          >
-            {`Claim ${formatNumber(claimable, 3)} Snowballs`}
-          </ContainedButton>
-        </Grid>
-      </Grid>
-    </CardWrapper>
-  )
+  // return (
+  //   <CardWrapper title='Claim'>
+  //     <Grid container spacing={2}>
+  //       <Grid item xs={12}>
+  //         <Typography color='textSecondary' variant='body1'>
+  //           {`Next distribution: ${nextDistribution?.toDateString()}`}
+  //         </Typography>
+  //       </Grid>
+  //       <Grid item xs={12}>
+  //         <ContainedButton
+  //           fullWidth
+  //           disabled={!claimable}
+  //           onClick={claim}
+  //         >
+  //           {`Claim ${formatNumber(claimable, 3)} Snowballs`}
+  //         </ContainedButton>
+  //       </Grid>
+  //     </Grid>
+  //   </CardWrapper>
+  // )
 }
 
 export default memo(SnowClaim)

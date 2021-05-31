@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44e57ca2-411d-48e2-9a3b-12bd91e6198f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/images/lp-icons/VSO.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/constants/gauge-info.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/gauge-info.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/constants/lp-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/lp-icons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/hooks/useGauge.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hooks/useGauge.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/containers/Home/SnowClaim/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/SnowClaim/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +61,7 @@
       <workItem from="1621896024415" duration="739000" />
       <workItem from="1621990155501" duration="898000" />
       <workItem from="1621992499443" duration="670000" />
+      <workItem from="1622482556845" duration="348000" />
     </task>
     <servers />
   </component>
