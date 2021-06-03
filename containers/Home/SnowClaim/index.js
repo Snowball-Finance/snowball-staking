@@ -17,28 +17,34 @@ const SnowClaim = () => {
   const claimable = useMemo(() =>
     userClaimable ? parseFloat(formatEther(userClaimable)) : null
     , [userClaimable]);
-  return (<div></div>)
 
-  // return (
-  //   <CardWrapper title='Claim'>
-  //     <Grid container spacing={2}>
-  //       <Grid item xs={12}>
-  //         <Typography color='textSecondary' variant='body1'>
-  //           {`Next distribution: ${nextDistribution?.toDateString()}`}
-  //         </Typography>
-  //       </Grid>
-  //       <Grid item xs={12}>
-  //         <ContainedButton
-  //           fullWidth
-  //           disabled={!claimable}
-  //           onClick={claim}
-  //         >
-  //           {`Claim ${formatNumber(claimable, 3)} Snowballs`}
-  //         </ContainedButton>
-  //       </Grid>
-  //     </Grid>
-  //   </CardWrapper>
-  // )
+  return (
+    <CardWrapper title='Claim'>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography color='textSecondary' variant='body1'>
+            {`Current total: 45k SNOB`}
+          </Typography>
+          <Typography color='textSecondary' variant='body1'>
+            {`Current distribution: Wed Jun 02 2021`}
+          </Typography>
+          <br/>
+          <Typography color='textSecondary' variant='body1'>
+            {`Next distribution: ${nextDistribution?.toDateString()}`}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <ContainedButton
+            fullWidth
+            disabled={!claimable}
+            onClick={claim}
+          >
+            {`Claim ${formatNumber(claimable, 3)} Snowballs`}
+          </ContainedButton>
+        </Grid>
+      </Grid>
+    </CardWrapper>
+  )
 }
 
 export default memo(SnowClaim)
