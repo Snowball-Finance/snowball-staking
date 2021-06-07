@@ -26,7 +26,6 @@ const getPairDataPrefill = (
   } else {
     totalValueOfPair = 2 * priceB * numBInPair;
   }
-
   const totalSupply = parseFloat(ethers.utils.formatEther(totalSupplyBN)); // Uniswap LP tokens are always 18 decimals
   const pricePerToken = totalValueOfPair / totalSupply;
 

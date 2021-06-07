@@ -12,6 +12,7 @@ import LockForm from './LockForm'
 import SnowVote from './SnowVote'
 import SnowClaim from './SnowClaim'
 import VoteDistribution from './VoteDistribution'
+import BoostCalculator from './BoostCalculator'
 
 const Home = () => {
   const { loading, isWrongNetwork } = useContracts();
@@ -52,6 +53,9 @@ const Home = () => {
               </Grid>
               <Grid item xs={12}>
                 <VoteDistribution />
+              </Grid>
+              <Grid item xs={12}>
+                <BoostCalculator />
               </Grid>
             </>
           )}
