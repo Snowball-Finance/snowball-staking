@@ -1,22 +1,34 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 
-const CalculatorPreview = () => {
+import { formatAPY } from 'utils/helpers/format'
+
+const CalculatorPreview = ({
+  selectedGauge,
+  boostFactor,
+  xSnobRequired
+}) => {
+
+  const snowBallAPY = useMemo(() => selectedGauge && boostFactor
+    ? formatAPY(selectedGauge.fullApy / 2.5 * boostFactor * 100)
+    : '0.0%'
+    , [boostFactor, selectedGauge])
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography color='textSecondary' variant='body1'>
-          Snowball boost factor: 1.000x
+          {`Snowball boost factor: ${boostFactor?.toFixed(3)}x`}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography color='textSecondary' variant='body1'>
-          xSNOB required for max boost: 0.061
+          {`xSNOB required for max boost: ${xSnobRequired?.toFixed(3) || null}`}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography color='textSecondary' variant='body1'>
-          Snowball APY: 18.34%
+          {`Snowball APY: ${snowBallAPY}`}
         </Typography>
       </Grid>
     </Grid>

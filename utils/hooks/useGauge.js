@@ -29,7 +29,7 @@ const useGauge = ({
     try {
       const tokens = await gaugeProxyContract.tokens();
       const totalWeight = await gaugeProxyContract.totalWeight();
-      const whiteListedTokens = tokens.slice(0,24);
+      const whiteListedTokens = tokens.slice(0, 24);
 
       const gaugeAddresses = await Promise.all(
         whiteListedTokens.map((token) => {
@@ -120,7 +120,7 @@ const useGauge = ({
         };
       });
 
-      console.log(gauges)
+      console.log('gauges => ', gauges)
       setGauges(gauges)
     } catch (error) {
       console.log('[Error] gaugeProxyContract => ', error)

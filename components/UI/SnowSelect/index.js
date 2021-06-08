@@ -51,7 +51,7 @@ const SnowSelect = React.forwardRef(({
       {placeholder &&
         <MenuItem
           key='placeholder'
-          value=''
+          value={{}}
           className={classes.placeholder}
         >
           {placeholder}
@@ -60,9 +60,9 @@ const SnowSelect = React.forwardRef(({
       {items.map((item, index) => (
         <MenuItem
           key={index}
-          value={item.VALUE}
+          value={item.token}
         >
-          {item.LABEL}
+          {item.depositTokenName}
         </MenuItem>
       ))}
     </Select>
