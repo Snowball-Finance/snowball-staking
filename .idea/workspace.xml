@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="44e57ca2-411d-48e2-9a3b-12bd91e6198f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/containers/Home/SnowClaim/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/containers/Home/SnowClaim/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +61,9 @@
       <workItem from="1621990155501" duration="898000" />
       <workItem from="1621992499443" duration="670000" />
       <workItem from="1622482556845" duration="1086000" />
-      <workItem from="1622678736729" duration="831000" />
+      <workItem from="1622678736729" duration="1496000" />
+      <workItem from="1623119466849" duration="842000" />
+      <workItem from="1623163094298" duration="2373000" />
     </task>
     <servers />
   </component>
