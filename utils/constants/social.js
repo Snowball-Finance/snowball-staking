@@ -9,7 +9,7 @@ const SOCIALS = Object.freeze({
     LABEL: 'medium link'
   },
   TWITTER: {
-    HREF: 'https://twitter.com/throwsnowballs',
+    HREF: 'https://twitter.com/snowballdefi',
     LABEL: 'twitter link'
   },
   DISCORD: {
