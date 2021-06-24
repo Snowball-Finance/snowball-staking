@@ -48,7 +48,7 @@ const useClaim = ({
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
-      const { hash } = await feeDistributorContract['claim()']({ gasLimit: 1000000 });
+      const { hash } = await feeDistributorContract['claim()']();
 
       while (loop) {
         tx = await web3.eth.getTransactionReceipt(hash);
