@@ -109,7 +109,6 @@ const useLock = ({
       const { hash: snowconeHash } = await snowconeContract.create_lock(
         amount,
         getEpochSecondForDay(new Date(data.date)),
-        { gasLimit: 1000000 },
       );
 
       loop = true;
@@ -160,7 +159,6 @@ const useLock = ({
 
       const { hash: snowconeHash } = await snowconeContract.increase_amount(
         amount,
-        { gasLimit: 1000000 },
       );
 
       loop = true;
@@ -194,7 +192,6 @@ const useLock = ({
 
       const { hash: snowconeHash } = await snowconeContract.increase_unlock_time(
         getEpochSecondForDay(new Date(data.date)),
-        { gasLimit: 1000000 },
       );
 
       while (loop) {
@@ -224,9 +221,7 @@ const useLock = ({
       const ethereumProvider = await detectEthereumProvider();
       const web3 = new Web3(ethereumProvider);
 
-      const { hash: snowconeHash } = await snowconeContract.withdraw(
-        { gasLimit: 1000000 },
-      );
+      const { hash: snowconeHash } = await snowconeContract.withdraw();
 
       while (loop) {
         tx = await web3.eth.getTransactionReceipt(snowconeHash);
