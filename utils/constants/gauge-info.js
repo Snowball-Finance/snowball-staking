@@ -368,6 +368,34 @@ const MAIN_GAUGE_INFO = Object.freeze({
       decimals: 18
     }
   },
+  '0x27f8FE86a513bAAF18B59D3dD15218Cc629640Fc': {
+    tokenName: 'WAVAX-SPORE',
+    poolName: 'WAVAX-SPORE Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x6e7f5c0b9f4432716bdd0a77a3601291b9d9e985',
+      priceId: 'spore',
+      decimals: 18
+    }
+  },
+  '0xa39785a4E4CdDa7509751ed152a00f3D37FbFa9F': {
+    tokenName: 'PNG-SPORE',
+    poolName: 'PNG-SPORE Pool',
+    a: {
+      address: '0x60781C2586D68229fde47564546784ab3fACA982',
+      priceId: 'png',
+      decimals: 18
+    },
+    b: {
+      address: '0x6e7f5c0b9f4432716bdd0a77a3601291b9d9e985',
+      priceId: 'spore',
+      decimals: 18
+    }
+  },
 })
 
 const GAUGE_INFO = IS_MAINNET ? MAIN_GAUGE_INFO : TEST_GAUGE_INFO

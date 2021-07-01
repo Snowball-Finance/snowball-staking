@@ -18,7 +18,7 @@ const LINKS = Object.freeze({
   },
   VOTE: {
     TITLE: 'Vote',
-    HREF: 'https://app.snowball.network/governance'
+    HREF: 'https://app.snowball.network/governance_v2'
   },
   NFT: {
     TITLE: 'NFT',

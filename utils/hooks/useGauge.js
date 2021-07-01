@@ -29,7 +29,7 @@ const useGauge = ({
     try {
       const tokens = await gaugeProxyContract.tokens();
       const totalWeight = await gaugeProxyContract.totalWeight();
-      const whiteListedTokens = tokens.slice(0, 24);
+      const whiteListedTokens = tokens.slice(0, 26); // need to whitelist or new gauges break the UI
 
       const gaugeAddresses = await Promise.all(
         whiteListedTokens.map((token) => {
