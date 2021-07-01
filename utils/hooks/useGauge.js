@@ -136,10 +136,14 @@ const useGauge = ({
       const web3 = new Web3(ethereumProvider);
 
       const weightsData = weights.map((weight) => ethers.BigNumber.from(weight))
+      const gasLimit = await gaugeProxyContract.estimateGas.vote(
+        tokens,
+        weightsData,
+      );
       const { hash } = await gaugeProxyContract.vote(
         tokens,
         weightsData,
-        { gasLimit: 1000000 },
+        { gasLimit },
       );
 
       while (loop) {
