@@ -15,8 +15,8 @@ const useGauge = ({
   gaugeProxyContract,
   setLoading
 }) => {
-  const { library, account } = useWeb3React();
-  const [gauges, setGauges] = useState([]);
+  const { library, account } = useWeb3React()
+  const [gauges, setGauges] = useState([])
 
   useEffect(() => {
     if (!isEmpty(gaugeProxyContract) && !isEmpty(prices)) {
@@ -27,23 +27,28 @@ const useGauge = ({
 
   const getGaugeProxyInfo = async () => {
     try {
-      const tokens = await gaugeProxyContract.tokens();
-      const totalWeight = await gaugeProxyContract.totalWeight();
-      const whiteListedTokens = tokens.slice(0, 27); // need to whitelist or new gauges break the UI
+      const tokens = await gaugeProxyContract.tokens()
+      const totalWeight = await gaugeProxyContract.totalWeight()
+
+      // add any denylist item here
+      const approve = token => {
+        return token != 0x53B37b9A6631C462d74D65d61e1c056ea9dAa637 
+      }
+      const approvedTokens = tokens.filter(approve) 
 
       const gaugeAddresses = await Promise.all(
-        whiteListedTokens.map((token) => {
-          return gaugeProxyContract.getGauge(token);
+        approvedTokens.map((token) => {
+          return gaugeProxyContract.getGauge(token)
         }),
-      );
+      )
 
       const balancesUserInfosHarvestables = await Promise.all(
-        whiteListedTokens.flatMap((token, index) => {
-          const { a, b } = GAUGE_INFO[token];
-          const gaugeTokenContract = new ethers.Contract(token, GAUGE_TOKEN_ABI, library.getSigner());
-          const aTokenContract = new ethers.Contract(a.address, GAUGE_TOKEN_ABI, library.getSigner());
-          const bTokenContract = new ethers.Contract(b.address, GAUGE_TOKEN_ABI, library.getSigner());
-          const gaugeContract = new ethers.Contract(gaugeAddresses[index], GAUGE_ABI, library.getSigner());
+        approvedTokens.flatMap((token, index) => {
+          const { a, b } = GAUGE_INFO[token]
+          const gaugeTokenContract = new ethers.Contract(token, GAUGE_TOKEN_ABI, library.getSigner())
+          const aTokenContract = new ethers.Contract(a.address, GAUGE_TOKEN_ABI, library.getSigner())
+          const bTokenContract = new ethers.Contract(b.address, GAUGE_TOKEN_ABI, library.getSigner())
+          const gaugeContract = new ethers.Contract(gaugeAddresses[index], GAUGE_ABI, library.getSigner())
 
           return [
             gaugeProxyContract.weights(token),
@@ -59,40 +64,40 @@ const useGauge = ({
             bTokenContract.balanceOf(token),
             gaugeTokenContract.totalSupply(),
             gaugeTokenContract.balanceOf(CONTRACTS.ICE_QUEEN),
-          ];
+          ]
         }),
-      );
+      )
 
-      const gauges = whiteListedTokens.map((token, idx) => {
-        const address = gaugeAddresses[idx];
-        const gaugeWeight = +balancesUserInfosHarvestables[idx * 13].toString();
-        const rewardRate = +balancesUserInfosHarvestables[idx * 13 + 1].toString();
-        const derivedSupply = +balancesUserInfosHarvestables[idx * 13 + 2].toString();
-        const totalSupply = +balancesUserInfosHarvestables[idx * 13 + 3].toString();
-        const balance = balancesUserInfosHarvestables[idx * 13 + 4];
-        const staked = balancesUserInfosHarvestables[idx * 13 + 5];
-        const harvestable = balancesUserInfosHarvestables[idx * 13 + 6];
-        const userWeight = +balancesUserInfosHarvestables[idx * 13 + 7].toString();
-        const userCurrentWeights = +balancesUserInfosHarvestables[idx * 13 + 8].toString();
-        const numAInPairBN = balancesUserInfosHarvestables[idx * 13 + 9];
-        const numBInPair = balancesUserInfosHarvestables[idx * 13 + 10];
-        const totalSupplyBN = balancesUserInfosHarvestables[idx * 13 + 11];
-        const iceQueenPairSupply = balancesUserInfosHarvestables[idx * 13 + 12];
+      const gauges = approvedTokens.map((token, idx) => {
+        const address = gaugeAddresses[idx]
+        const gaugeWeight = +balancesUserInfosHarvestables[idx * 13].toString()
+        const rewardRate = +balancesUserInfosHarvestables[idx * 13 + 1].toString()
+        const derivedSupply = +balancesUserInfosHarvestables[idx * 13 + 2].toString()
+        const totalSupply = +balancesUserInfosHarvestables[idx * 13 + 3].toString()
+        const balance = balancesUserInfosHarvestables[idx * 13 + 4]
+        const staked = balancesUserInfosHarvestables[idx * 13 + 5]
+        const harvestable = balancesUserInfosHarvestables[idx * 13 + 6]
+        const userWeight = +balancesUserInfosHarvestables[idx * 13 + 7].toString()
+        const userCurrentWeights = +balancesUserInfosHarvestables[idx * 13 + 8].toString()
+        const numAInPairBN = balancesUserInfosHarvestables[idx * 13 + 9]
+        const numBInPair = balancesUserInfosHarvestables[idx * 13 + 10]
+        const totalSupplyBN = balancesUserInfosHarvestables[idx * 13 + 11]
+        const iceQueenPairSupply = balancesUserInfosHarvestables[idx * 13 + 12]
         const rewardRatePerYear = derivedSupply
           ? (rewardRate / derivedSupply) * 3600 * 24 * 365
-          : Number.POSITIVE_INFINITY;
-        const { tokenName, poolName } = GAUGE_INFO[token];
+          : Number.POSITIVE_INFINITY
+        const { tokenName, poolName } = GAUGE_INFO[token]
         const { totalValueOfPair, pricePerToken } = getPairDataPrefill(
           prices,
           token,
           numAInPairBN,
           numBInPair,
           totalSupplyBN
-        );
+        )
 
-        const numTokensInPool = parseFloat(ethers.utils.formatEther(iceQueenPairSupply));
-        const valueStakedInGauge = pricePerToken * numTokensInPool;
-        const fullApy = (rewardRatePerYear * prices['snowball']) / pricePerToken;
+        const numTokensInPool = parseFloat(ethers.utils.formatEther(iceQueenPairSupply))
+        const valueStakedInGauge = pricePerToken * numTokensInPool
+        const fullApy = (rewardRatePerYear * prices['snowball']) / pricePerToken
 
         return {
           allocPoint: gaugeWeight / totalWeight.toString() || 0,
@@ -117,8 +122,8 @@ const useGauge = ({
           totalValue: totalValueOfPair,
           valueStakedInGauge,
           numTokensInPool,
-        };
-      });
+        }
+      })
 
       console.log('gauges => ', gauges)
       setGauges(gauges)
@@ -132,22 +137,22 @@ const useGauge = ({
     try {
       let loop = true
       let tx = null
-      const ethereumProvider = await detectEthereumProvider();
-      const web3 = new Web3(ethereumProvider);
+      const ethereumProvider = await detectEthereumProvider()
+      const web3 = new Web3(ethereumProvider)
 
       const weightsData = weights.map((weight) => ethers.BigNumber.from(weight))
       const gasLimit = await gaugeProxyContract.estimateGas.vote(
         tokens,
         weightsData,
-      );
+      )
       const { hash } = await gaugeProxyContract.vote(
         tokens,
         weightsData,
         { gasLimit },
-      );
+      )
 
       while (loop) {
-        tx = await web3.eth.getTransactionReceipt(hash);
+        tx = await web3.eth.getTransactionReceipt(hash)
         if (isEmpty(tx)) {
           await delay(300)
         } else {
@@ -156,7 +161,7 @@ const useGauge = ({
       }
 
       if (tx.status) {
-        await getGaugeProxyInfo();
+        await getGaugeProxyInfo()
       }
     } catch (error) {
       console.log('[Error] vote => ', error)

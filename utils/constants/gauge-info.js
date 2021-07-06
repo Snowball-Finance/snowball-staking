@@ -409,6 +409,20 @@ const MAIN_GAUGE_INFO = Object.freeze({
       priceId: 'eth',
       decimals: 18
     }
+  },
+  '0x962ECf51A169090002CC88B4Bf16e447d2E13100': {
+    tokenName: 'JOE-AVAX-PNG',
+    poolName: 'JOE-AVAX-PNG Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x60781C2586D68229fde47564546784ab3fACA982',
+      priceId: 'png',
+      decimals: 18
+    }
   }
 })
 
