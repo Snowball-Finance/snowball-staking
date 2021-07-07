@@ -36,7 +36,7 @@ const IncreaseTime = () => {
 
   const schema = yup.object().shape({
     date: DATE_VALID.test('date',
-      'Date should be in 4 years',
+      'Please adjust date to be 2 years or less',
       value => new Date(value) <= dateBefore),
     duration: SELECT_VALID
   });
