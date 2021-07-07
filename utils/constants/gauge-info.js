@@ -61,8 +61,8 @@ const MAIN_GAUGE_INFO = Object.freeze({
     }
   },
   '0x586554828eE99811A8ef75029351179949762c26': {
-    tokenName: 'WAVAX-ETHER',
-    poolName: 'WAVAX-ETHER Pool',
+    tokenName: 'WAVAX-ETH',
+    poolName: 'WAVAX-ETH Pool',
     a: {
       address: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
       priceId: 'wavax',
@@ -70,7 +70,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
     },
     b: {
       address: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-      priceId: 'ether',
+      priceId: 'eth',
       decimals: 18
     }
   },
@@ -154,13 +154,13 @@ const MAIN_GAUGE_INFO = Object.freeze({
     },
     b: {
       address: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-      priceId: 'ether',
+      priceId: 'eth',
       decimals: 18
     }
   },
   '0x3815f36C3d60d658797958EAD8778f6500be16Df': {
-    tokenName: 'PNG-ETHER',
-    poolName: 'PNG-ETHER Pool',
+    tokenName: 'PNG-ETH',
+    poolName: 'PNG-ETH Pool',
     a: {
       address: '0x60781C2586D68229fde47564546784ab3fACA982',
       priceId: 'png',
@@ -168,7 +168,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
     },
     b: {
       address: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-      priceId: 'ether',
+      priceId: 'eth',
       decimals: 18
     }
   },
@@ -396,6 +396,34 @@ const MAIN_GAUGE_INFO = Object.freeze({
       decimals: 18
     }
   },
+  '0xAbD637a6881a2D4bbf279aE484c2447c070f7C73': {
+    tokenName: 'JOE-AVAX-ETH',
+    poolName: 'JOE-AVAX-ETH Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
+      priceId: 'eth',
+      decimals: 18
+    }
+  },
+  '0x962ECf51A169090002CC88B4Bf16e447d2E13100': {
+    tokenName: 'JOE-AVAX-PNG',
+    poolName: 'JOE-AVAX-PNG Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x60781C2586D68229fde47564546784ab3fACA982',
+      priceId: 'png',
+      decimals: 18
+    }
+  }
 })
 
 const GAUGE_INFO = IS_MAINNET ? MAIN_GAUGE_INFO : TEST_GAUGE_INFO
