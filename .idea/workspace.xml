@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44e57ca2-411d-48e2-9a3b-12bd91e6198f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/assets/images/lp-icons/JOE.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/constants/gauge-info.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/gauge-info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/constants/lp-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/constants/lp-icons.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +73,8 @@
       <workItem from="1624597519988" duration="52000" />
       <workItem from="1625156065199" duration="2483000" />
       <workItem from="1625633697012" duration="394000" />
-      <workItem from="1625962335131" duration="713000" />
+      <workItem from="1625962335131" duration="880000" />
+      <workItem from="1626031762481" duration="329000" />
     </task>
     <servers />
   </component>
