@@ -26,6 +26,16 @@ const Navigation = ({
 
   return (
       <>
+    <Link href={LINKS.IDO.HREF}>
+      <a className={clsx(classes.container, className)}>
+        <Typography
+          color='textSecondary'
+          className={classes.title}
+        >
+          {LINKS.IDO.TITLE}
+        </Typography>
+      </a>
+    </Link>
     <Link href={LINKS.STABLEVAULT.HREF}>
       <a className={clsx(classes.container, className)}>
         <Typography
