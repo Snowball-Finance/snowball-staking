@@ -461,7 +461,7 @@ const MAIN_GAUGE_INFO = Object.freeze({
       decimals: 18
     },
     b: {
-      address: '0xf319e2f610462f846d6e93f51cdc862eeff2a554',
+      address: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
       priceId: 'snowball',
       decimals: 18
     }
