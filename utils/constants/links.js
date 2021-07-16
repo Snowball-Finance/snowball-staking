@@ -27,6 +27,10 @@ const LINKS = Object.freeze({
   FAQ: {
     TITLE: 'FAQ',
     HREF: 'https://app.snowball.network/faq'
+  },
+  IDO: {
+    TITLE: 'IDO',
+    HREF: 'https://app.snowball.network/ido'
   }
 });
 

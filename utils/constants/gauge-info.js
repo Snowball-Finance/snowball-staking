@@ -423,6 +423,48 @@ const MAIN_GAUGE_INFO = Object.freeze({
       priceId: 'png',
       decimals: 18
     }
+  },
+  '0xcC757081C972D0326de42875E0DA2c54af523622': {
+    tokenName: 'JOE-AVAX-JOE',
+    poolName: 'JOE-AVAX-JOE Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
+      priceId: 'joe',
+      decimals: 18
+    }
+  },
+  '0x2f17BAC3E0339C1BFB6E0DD380d65bd2Fc665C75': {
+    tokenName: 'JOE-AVAX-SPORE',
+    poolName: 'JOE-AVAX-SPORE Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0x6e7f5c0b9f4432716bdd0a77a3601291b9d9e985',
+      priceId: 'spore',
+      decimals: 18
+    }
+  },
+  '0x8b2E1802A7E0E0c7e1EaE8A7c636058964e21047': {
+    tokenName: 'JOE-AVAX-SNOB',
+    poolName: 'JOE-AVAX-SNOB Pool',
+    a: {
+      address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+      priceId: 'wavax',
+      decimals: 18
+    },
+    b: {
+      address: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
+      priceId: 'snowball',
+      decimals: 18
+    }
   }
 })
 
