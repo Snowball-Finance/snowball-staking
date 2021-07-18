@@ -11,6 +11,10 @@ import MAIN_GAUGE_TOKEN_ABI from 'libs/abis/main/gauge-token.json'
 import TEST_GAUGE_TOKEN_ABI from 'libs/abis/test/gauge-token.json'
 import MAIN_FEE_DISTRIBUTOR_ABI from 'libs/abis/main/fee-distributor.json'
 import TEST_FEE_DISTRIBUTOR_ABI from 'libs/abis/test/fee-distributor.json'
+import JOE_LP_ABI from 'libs/abis/main/jlp.json'
+import PANGOLIN_LP_ABI from 'libs/abis/main/pgl.json'
+import ERC20_ABI from 'libs/abis/main/erc20.json'
+import SNOWGLOBE_ABI from 'libs/abis/main/snowglobe.json'
 import { IS_MAINNET } from 'config'
 
 const GAUGE_PROXY_ABI = IS_MAINNET ? MAIN_GAUGE_PROXY_ABI : TEST_GAUGE_PROXY_ABI
@@ -26,5 +30,9 @@ export {
     SNOWCONE_ABI,
     GAUGE_ABI,
     GAUGE_TOKEN_ABI,
-    FEE_DISTRIBUTOR_ABI
+    FEE_DISTRIBUTOR_ABI,
+    JOE_LP_ABI,
+    PANGOLIN_LP_ABI,
+    ERC20_ABI,
+    SNOWGLOBE_ABI
 }

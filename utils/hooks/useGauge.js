@@ -43,89 +43,96 @@ const useGauge = ({
       )
 
       const balancesUserInfosHarvestables = await Promise.all(
-        approvedTokens.flatMap((token, index) => {
-          const { a, b } = GAUGE_INFO[token]
+        approvedTokens.map(async (token, index) => {
+          const { a, b } = await GAUGE_INFO(token)
           const gaugeTokenContract = new ethers.Contract(token, GAUGE_TOKEN_ABI, library.getSigner())
           const aTokenContract = new ethers.Contract(a.address, GAUGE_TOKEN_ABI, library.getSigner())
           const bTokenContract = new ethers.Contract(b.address, GAUGE_TOKEN_ABI, library.getSigner())
           const gaugeContract = new ethers.Contract(gaugeAddresses[index], GAUGE_ABI, library.getSigner())
 
-          return [
-            gaugeProxyContract.weights(token),
-            gaugeContract.rewardRate(),
-            gaugeContract.derivedSupply(),
-            gaugeContract.totalSupply(),
-            gaugeTokenContract.balanceOf(account),
-            gaugeContract.balanceOf(account),
-            gaugeContract.earned(account),
-            gaugeProxyContract.votes(account, token),
-            gaugeProxyContract.usedWeights(account),
-            aTokenContract.balanceOf(token),
-            bTokenContract.balanceOf(token),
-            gaugeTokenContract.totalSupply(),
-            gaugeTokenContract.balanceOf(CONTRACTS.ICE_QUEEN),
-          ]
+          let gaugeWeight = await gaugeProxyContract.weights(token)
+          let rewardRate = await gaugeContract.rewardRate()
+          let derivedSupply = await gaugeContract.derivedSupply()
+          let totalSupply = await gaugeContract.totalSupply()
+          let balance = await gaugeTokenContract.balanceOf(account)
+          let staked = await gaugeContract.balanceOf(account)
+          let harvestable = await gaugeContract.earned(account)
+          let userWeight = await gaugeProxyContract.votes(account, token)
+          let userCurrentWeights = await gaugeProxyContract.usedWeights(account)
+          let numAInPairBN = await aTokenContract.balanceOf(token)
+          let numBInPair = await bTokenContract.balanceOf(token)
+          let totalSupplyBN = await gaugeTokenContract.totalSupply()
+          let iceQueenPairSupply = await gaugeTokenContract.balanceOf(CONTRACTS.ICE_QUEEN)
+
+          return {
+            gaugeWeight: gaugeWeight ? gaugeWeight : 0,
+            rewardRate:  rewardRate ? rewardRate : 0,
+            derivedSupply: derivedSupply ? derivedSupply : 0,
+            totalSupply: totalSupply ? totalSupply : 0,
+            balance: balance ? balance : 0,
+            staked: staked ? staked : 0,
+            harvestable: harvestable ? harvestable : 0,
+            userWeight: userWeight ? userWeight : 0,
+            userCurrentWeights: userCurrentWeights ? userCurrentWeights : 0,
+            numAInPairBN: numAInPairBN ? numAInPairBN : 0,
+            numBInPair: numBInPair ? numBInPair : 0,
+            totalSupplyBN: totalSupplyBN ? totalSupplyBN : 0,
+            iceQueenPairSupply: iceQueenPairSupply ? iceQueenPairSupply : 0,
+            a: a,
+            b: b
+          }
         }),
       )
 
-      const gauges = approvedTokens.map((token, idx) => {
+      const gauges = await Promise.all(
+        approvedTokens.map(async (token, idx) => {
         const address = gaugeAddresses[idx]
-        const gaugeWeight = +balancesUserInfosHarvestables[idx * 13].toString()
-        const rewardRate = +balancesUserInfosHarvestables[idx * 13 + 1].toString()
-        const derivedSupply = +balancesUserInfosHarvestables[idx * 13 + 2].toString()
-        const totalSupply = +balancesUserInfosHarvestables[idx * 13 + 3].toString()
-        const balance = balancesUserInfosHarvestables[idx * 13 + 4]
-        const staked = balancesUserInfosHarvestables[idx * 13 + 5]
-        const harvestable = balancesUserInfosHarvestables[idx * 13 + 6]
-        const userWeight = +balancesUserInfosHarvestables[idx * 13 + 7].toString()
-        const userCurrentWeights = +balancesUserInfosHarvestables[idx * 13 + 8].toString()
-        const numAInPairBN = balancesUserInfosHarvestables[idx * 13 + 9]
-        const numBInPair = balancesUserInfosHarvestables[idx * 13 + 10]
-        const totalSupplyBN = balancesUserInfosHarvestables[idx * 13 + 11]
-        const iceQueenPairSupply = balancesUserInfosHarvestables[idx * 13 + 12]
-        const rewardRatePerYear = derivedSupply
-          ? (rewardRate / derivedSupply) * 3600 * 24 * 365
+        const gauge_infos = balancesUserInfosHarvestables[idx]
+        const rewardRatePerYear = gauge_infos.derivedSupply
+          ? (gauge_infos.rewardRate / gauge_infos.derivedSupply) * 3600 * 24 * 365
           : Number.POSITIVE_INFINITY
-        const { tokenName, poolName } = GAUGE_INFO[token]
+
+        const { tokenName, poolName } = await GAUGE_INFO(token)
         const { totalValueOfPair, pricePerToken } = getPairDataPrefill(
           prices,
           token,
-          numAInPairBN,
-          numBInPair,
-          totalSupplyBN
+          gauge_infos.numAInPairBN,
+          gauge_infos.numBInPair,
+          gauge_infos.totalSupplyBN
         )
 
-        const numTokensInPool = parseFloat(ethers.utils.formatEther(iceQueenPairSupply))
-        const valueStakedInGauge = pricePerToken * numTokensInPool
+        // const numTokensInPool = parseFloat(ethers.utils.formatEther(iceQueenPairSupply))
+        // const valueStakedInGauge = pricePerToken * numTokensInPool
         const fullApy = (rewardRatePerYear * prices['snowball']) / pricePerToken
 
         return {
-          allocPoint: gaugeWeight / totalWeight.toString() || 0,
+          allocPoint: gauge_infos.gaugeWeight / totalWeight.toString() || 0,
           token,
           address,
           gaugeAddress: address,
-          gaugeWeight,
+          gaugeWeight: gauge_infos.gaugeWeight,
           totalWeight: +totalWeight.toString(),
-          userWeight,
-          userCurrentWeights,
-          rewardRate,
-          derivedSupply,
-          totalSupply,
-          balance,
-          staked,
-          harvestable,
+          userWeight: gauge_infos.userWeight,
+          userCurrentWeights: gauge_infos.userCurrentWeights,
+          rewardRate: gauge_infos.rewardRate,
+          derivedSupply: gauge_infos.derivedSupply,
+          totalSupply: gauge_infos.totalSupply,
+          balance: gauge_infos.balance,
+          staked: gauge_infos.staked,
+          harvestable: gauge_infos.harvestable,
           depositTokenName: tokenName,
           poolName,
           rewardRatePerYear,
           fullApy,
           usdPerToken: pricePerToken,
           totalValue: totalValueOfPair,
-          valueStakedInGauge,
-          numTokensInPool,
+          a: gauge_infos.a,
+          b: gauge_infos.b
+          // valueStakedInGauge,
+          // numTokensInPool,
         }
-      })
+      }))
 
-      console.log('gauges => ', gauges)
       setGauges(gauges)
     } catch (error) {
       console.log('[Error] gaugeProxyContract => ', error)
