@@ -34,7 +34,7 @@ const FarmIcon = ({
 }) => {
   const classes = useStyles();
 
-  const { a, b } = GAUGE_INFO[token];
+  const { a, b } = GAUGE_INFO(token);
 
   return (
     <div className={classes.root}>

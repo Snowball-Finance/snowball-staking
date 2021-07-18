@@ -1,15 +1,16 @@
 import { ethers } from 'ethers'
 import GAUGE_INFO from 'utils/constants/gauge-info'
 
-const getPairDataPrefill = (
+const getPairDataPrefill = async (
   prices,
   pairAddress,
   numAInPairBN,
   numBInPairBN,
   totalSupplyBN,
 ) => {
-  const { a, b } = GAUGE_INFO[pairAddress];
-
+  const { a, b } = await GAUGE_INFO(pairAddress);
+  console.log('numAInPairBN: ',numAInPairBN)
+  console.log('a.decimals: ',a.decimals)
   const numAInPair = parseFloat(
     ethers.utils.formatUnits(numAInPairBN, a.decimals),
   );
