@@ -65,19 +65,19 @@ const useGauge = ({
           let iceQueenPairSupply = await gaugeTokenContract.balanceOf(CONTRACTS.ICE_QUEEN)
 
           return {
-            gaugeWeight: gaugeWeight ? gaugeWeight : 0,
-            rewardRate:  rewardRate ? rewardRate : 0,
-            derivedSupply: derivedSupply ? derivedSupply : 0,
-            totalSupply: totalSupply ? totalSupply : 0,
-            balance: balance ? balance : 0,
-            staked: staked ? staked : 0,
-            harvestable: harvestable ? harvestable : 0,
-            userWeight: userWeight ? userWeight : 0,
-            userCurrentWeights: userCurrentWeights ? userCurrentWeights : 0,
-            numAInPairBN: numAInPairBN ? numAInPairBN : 0,
-            numBInPair: numBInPair ? numBInPair : 0,
-            totalSupplyBN: totalSupplyBN ? totalSupplyBN : 0,
-            iceQueenPairSupply: iceQueenPairSupply ? iceQueenPairSupply : 0,
+            gaugeWeight: gaugeWeight || 0,
+            rewardRate: rewardRate || 0,
+            derivedSupply: derivedSupply || 0,
+            totalSupply: totalSupply || 0,
+            balance: balance || 0,
+            staked: staked || 0,
+            harvestable: harvestable || 0,
+            userWeight: userWeight || 0,
+            userCurrentWeights: userCurrentWeights || 0,
+            numAInPairBN: numAInPairBN || 0,
+            numBInPair: numBInPair || 0,
+            totalSupplyBN: totalSupplyBN || 0,
+            iceQueenPairSupply: iceQueenPairSupply || 0,
             a: a,
             b: b
           }
@@ -101,8 +101,6 @@ const useGauge = ({
           gauge_infos.totalSupplyBN
         )
 
-        // const numTokensInPool = parseFloat(ethers.utils.formatEther(iceQueenPairSupply))
-        // const valueStakedInGauge = pricePerToken * numTokensInPool
         const fullApy = (rewardRatePerYear * prices['snowball']) / pricePerToken
 
         return {
@@ -128,8 +126,6 @@ const useGauge = ({
           totalValue: totalValueOfPair,
           a: gauge_infos.a,
           b: gauge_infos.b
-          // valueStakedInGauge,
-          // numTokensInPool,
         }
       }))
 

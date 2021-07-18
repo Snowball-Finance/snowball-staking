@@ -2,8 +2,6 @@ import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useContracts } from 'contexts/contract-context'
 
-
-// import GAUGE_INFO from 'utils/constants/gauge-info'
 import LP_ICONS from 'utils/constants/lp-icons'
 
 const useStyles = makeStyles((theme) => ({
