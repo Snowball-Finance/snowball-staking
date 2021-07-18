@@ -23,10 +23,10 @@ const SnowClaim = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography color='textSecondary' variant='body1'>
-            {`Current distribution amount: 19k SNOB`}
+            {`Current distribution amount: 16,273 SNOB`}
           </Typography>
           <Typography color='textSecondary' variant='body1'>
-            {`Current distribution date: Wed Jun 30 2021`}
+            {`Current distribution date: Wed Jul 14 2021`}
           </Typography>
           <br/>
           <Typography color='textSecondary' variant='body1'>
