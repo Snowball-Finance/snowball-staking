@@ -4,6 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
 
 import { isEmpty, delay } from 'utils/helpers/utility'
+import getCurrentDistributionPhase from 'utils/helpers/getDistributionPhase';
 
 const useClaim = ({
   setLoading,
@@ -12,7 +13,7 @@ const useClaim = ({
   const { account } = useWeb3React();
 
   const [userClaimable, setUserClaimable] = useState(0);
-  const [nextDistribution, setNextDistribution] = useState(null);
+  const [distributionStatus, setDistributionStatus] = useState(null);
 
 
   useEffect(() => {
@@ -25,15 +26,13 @@ const useClaim = ({
   const getFeeDistributorInfo = async () => {
     try {
       const [
-        userClaimable,
-        timeCursor,
+        userClaimable
       ] = await Promise.all([
         feeDistributorContract.callStatic['claim(address)'](account, { gasLimit: 1000000 }),
-        feeDistributorContract['time_cursor()']({ gasLimit: 1000000 }),
       ]);
 
-      const nextDistribution = new Date(timeCursor.toNumber() * 1000);
-      setNextDistribution(nextDistribution);
+      let distributionData = await getCurrentDistributionPhase();
+      setDistributionStatus(distributionData);
       setUserClaimable(userClaimable.toString() ? userClaimable : null);
     } catch (error) {
       console.log('[Error] getSnowconeInfo => ', error)
@@ -71,7 +70,7 @@ const useClaim = ({
 
   return {
     userClaimable,
-    nextDistribution,
+    distributionStatus,
     claim
   }
 }

@@ -11,7 +11,7 @@ const SnowClaim = () => {
   const {
     claim,
     userClaimable,
-    nextDistribution
+    distributionStatus
   } = useContracts();
 
   const claimable = useMemo(() =>
@@ -23,14 +23,14 @@ const SnowClaim = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography color='textSecondary' variant='body1'>
-            {`Current distribution amount: 16,273 SNOB`}
+            {`Current distribution amount: ${formatNumber(distributionStatus?.snobDistributed,0)} SNOB`}
           </Typography>
           <Typography color='textSecondary' variant='body1'>
-            {`Current distribution date: Wed Jul 14 2021`}
+            {`Current distribution:  ${(new Date(distributionStatus?.startDate)).toDateString()}`}
           </Typography>
           <br/>
           <Typography color='textSecondary' variant='body1'>
-            {`Next distribution: ${nextDistribution?.toDateString()}`}
+            {`Next distribution: ${(new Date(distributionStatus?.nextDate)).toDateString()}`}
           </Typography>
         </Grid>
         <Grid item xs={12}>
